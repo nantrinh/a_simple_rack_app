@@ -8,15 +8,16 @@ I documented my work here to refer to when my future self inevitably forgets som
 This part follows the Launch School tutorial closely.
 
 1. Create a local folder, `a_simple_rack_app`. Make sure it is not nested inside of any other projects or applications.
-**Why?** If you working within an existing project or application, their dependencies may interfere with yours. You would want to start off with a clean slate.
+
+...**Why?** If you working within an existing project or application, their dependencies may interfere with yours. You would want to start off with a clean slate.
 
 2. Create a new file `Gemfile` in the folder, with the following contents:
-```
-source "https://rubygems.org"
-
-gem 'rack', '~> 2.0.1'
-```
-**Why?** I used Bundler to manage dependencies. Bundler refers to a `Gemfile` to see what gems are required. 
+   ```
+   source "https://rubygems.org"
+   
+   gem 'rack', '~> 2.0.1'
+   ```
+...**Why?** I used Bundler to manage dependencies. Bundler refers to a `Gemfile` to see what gems are required. 
 
 
 3. Run `bundle install` to install dependencies and generate a `Gemfile.lock` file.
