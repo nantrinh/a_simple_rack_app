@@ -19,10 +19,9 @@ This part follows the Launch School tutorial closely.
    ```
    > Why? I used Bundler to manage dependencies. Bundler refers to a `Gemfile` to see what gems are required. 
 
-
 3. Run `bundle install` to install dependencies and generate a `Gemfile.lock` file.
 
-   > Why? According to the Launch School Core Ruby Tools [book](https://launchschool.com/books/core_ruby_tools/read/bundler#gemfile), `Gemfile.lock` shows all the dependencies for your program: the Gems listed in `Gemfile`, as well as any Gems that those depend on. 
+   > Why? According to the [Launch School Core Ruby Tools book](https://launchschool.com/books/core_ruby_tools/read/bundler#gemfile), `Gemfile.lock` shows all the dependencies for your program: the Gems listed in `Gemfile`, as well as any Gems that those depend on. 
 
 4. Create a `config.ru` file with the following contents.
    ```ruby
@@ -31,8 +30,7 @@ This part follows the Launch School tutorial closely.
    run CodeCards.new
    ```
 
-   > Why? This is a `rackup` file, a configuration file that Rack will use to know what to run and how to run it. Rack expects it to be called `config.ru` by default.
-
+   > Why? This is a `rackup` file, a configuration file that Rack will use to know what to run and how to run it. Rack expects the file to be called `config.ru` by default.
 
 4. Create a file `codecards.rb`.
 
@@ -40,4 +38,3 @@ This part follows the Launch School tutorial closely.
 
 # The App 
 This part deviates from the Launch School tutorial.
-
