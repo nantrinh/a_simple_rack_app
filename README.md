@@ -39,7 +39,7 @@ This part follows the Launch School tutorial closely.
    > Why? Since I put `require_relative 'codecards'` in my rackup file, this implies that the main code for the app will be located in a file called `codecards.rb`.
 
 5. Put the following content inside `codecards.rb`.
-   ```
+   ```ruby
    require_relative 'cards'
    
    class CodeCards 
@@ -48,20 +48,18 @@ This part follows the Launch School tutorial closely.
        when '/'
          status = 200
          headers = {'Content-Type' => 'text/html'}
-         body = "<html><body><h1>Hello World</h1></body></html>"
-         response(status, headers, body)
+         body = '<html><body><h1>Hello World</h1></body></html>'
        when '/random_card'
          term, definition = Cards.new.random_card
          status = 200
          headers = {'Content-Type' => 'text/html'}
-         body = "<html><body><h2>#{term}</h2><p>#{definition}</p></body></html>"
-         response(status, headers, body)
+         body = '<html><body><h2>#{term}</h2><p>#{definition}</p></body></html>'
        else
          status = 404 
          headers = {'Content-Type' => 'text/html', 'Content-Length'=> '48'}
          body = "<html><body><h4>404 Not Found</h4></body></html>"
-         response(status, headers, body)
        end
+       response(status, headers, body)
      end
    
      def response(status, headers={}, body='')
@@ -73,7 +71,7 @@ This part follows the Launch School tutorial closely.
 
 
 6. Create a file `cards.rb` with the following content.
-   ```
+   ```ruby
    class Cards
      def initialize
       @cards = [
@@ -160,25 +158,23 @@ The `body` variable now points to one long string: `"<!DOCTYPE html>\n<html>\n  
        when '/'
          status = 200
          headers = {'Content-Type' => 'text/html'}
-         body = "<html><body><h1>Hello World</h1></body></html>"
-         response(status, headers, body)
+         body = '<html><body><h1>Hello World</h1></body></html>'
        when '/random_card'
          term, definition = Cards.new.random_card
          status = 200
          headers = {'Content-Type' => 'text/html'}
-         body = File.read("views/random_card.html") 
+         body = File.read('views/random_card.html') 
          template_regex = /#\{.+?\}/
          matches = body.scan(template_regex)
          matches.each do |match|
            body.sub!(match, eval(extract_expression(match)))
          end
-         response(status, headers, body)
        else
          status = 404 
          headers = {'Content-Type' => 'text/html', 'Content-Length'=> '48'}
-         body = "<html><body><h4>404 Not Found</h4></body></html>"
-         response(status, headers, body)
+         body = '<html><body><h4>404 Not Found</h4></body></html>'
        end
+       response(status, headers, body)
      end
    
      def response(status, headers={}, body='')
@@ -228,27 +224,25 @@ end
 require_relative 'cards'
 require_relative 'gizzard'
 
-class CodeCards < 'Gizzard' 
+class CodeCards < Gizzard
   def call(env)
     case env['REQUEST_PATH']
     when '/'
       status = 200
-      headers = {'Content-Type' => 'text/html'}
-      body = "<html><body><h1>Hello World</h1></body></html>"
-      response(status, headers, body)
+      headers = { 'Content-Type' => 'text/html' }
+      body = '<html><body><h1>Hello World</h1></body></html>'
     when '/random_card'
       term, definition = Cards.new.random_card
       status = 200
-      headers = {'Content-Type' => 'text/html'}
+      headers = { 'Content-Type' => 'text/html' }
       binding_object = binding
       body = erb_result(:random_card, binding_object)
-      response(status, headers, body)
     else
-      status = 404 
-      headers = {'Content-Type' => 'text/html', 'Content-Length'=> '48'}
-      body = "<html><body><h4>404 Not Found</h4></body></html>"
-      response(status, headers, body)
+      status = 404
+      headers = { 'Content-Type' => 'text/html', 'Content-Length' => '48' }
+      body = '<html><body><h4>404 Not Found</h4></body></html>'
     end
+    response(status, headers, body)
   end
 end
 ```
@@ -256,9 +250,11 @@ end
 
    > Why? An instance of `Binding` encapsulates the local variable bindings in effect at a given point in execution. A top-level method called `binding` returns whatever the current binding is. The most common use of `Binding` objects is in the position of second argument to `eval`. If you provide a binding in that position, the string being `eval`-ed is executed in the context of the given binding. Any local variables used inside the `eval` string are interpreted in the context of that binding. (Reference: David Black's The Well-Grounded Rubyist 2E (2014), Manning, page 434)
 
-6.
-
 # TODO
+- allow user to view all cards by set (e.g., quizlet.com/user/set)
+    - your "database" are files in your directory for now
+- allow user to learn cards by set (e.g., quizlet.com/user/set/flashcards/1)
+    - implement with navigation done through links
 
 # WORK IN PROGRESS 
 To this end, the tutorial makes use of [ERB](https://ruby-doc.org/stdlib-2.5.3/libdoc/erb/rdoc/ERB.html), which is part of the Ruby standard library. You do not need to install any other software to use it.
