@@ -97,12 +97,12 @@ This part follows the Launch School tutorial closely.
    #!/bin/sh
    bundle exec rackup config.ru -p 9595
    ```
-   > Why? I do this so I do not have to type the long command every time I want to run the server. Note that you can choose whichever port you wish.
+   > Why? I do this so I do not have to type the long command every time I want to run the app. Note that you can choose whichever port you wish.
 
 2. (Optional) Run this command to change the permissions for the file, marking it as executable.
    `chmod +x run.sh`
 
-3. Run your server using this command if you have followed the optional steps above: `./run`, or, if you haven't, run `bundle exec rackup config.ru -p 9595`.
+3. Run your app using this command if you have followed the optional steps above: `./run`, or, if you haven't, run `bundle exec rackup config.ru -p 9595`.
 
 4. If you are using [HTTPie](https://github.com/jakubroztocil/httpie), run `http GET localhost:9595/` in the terminal and view the response. It should look like:
    ```
