@@ -53,11 +53,11 @@ This part follows the Launch School tutorial closely.
          term, definition = Cards.new.random_card
          status = 200
          headers = {'Content-Type' => 'text/html'}
-         body = '<html><body><h2>#{term}</h2><p>#{definition}</p></body></html>'
+         body = "<html><body><h2>#{term}</h2><p>#{definition}</p></body></html>"
        else
          status = 404 
          headers = {'Content-Type' => 'text/html', 'Content-Length'=> '48'}
-         body = "<html><body><h4>404 Not Found</h4></body></html>"
+         body = '<html><body><h4>404 Not Found</h4></body></html>'
        end
        response(status, headers, body)
      end
@@ -74,14 +74,14 @@ This part follows the Launch School tutorial closely.
    ```ruby
    class Cards
      def initialize
-      @cards = [
-        ["What is the DOM (Document Object Model)?", "An in-memory object representation of an HTML document.\nA hierarchy of nodes.\nIt provides a way to interact with a web page using JavaScript and provides the functionality needed to build modern interactive user experiences."],
-       ["Why do browsers insert elements into the DOM that are missing from the HTML?", "A fundamental tenet of the web is permissiveness. Browsers always do their best to display HTML, even when it has errors."],
-       ["Are all text nodes the same?", "Yes. However, developers sometimes make a distinction between empty nodes (spaces, tabs, newlines, etc.) and text nodes that contain content (words, numbers, symbols, etc.)."]
-      ] 
+       @cards = [
+         ['What is the DOM (Document Object Model)?', "An in-memory object representation of an HTML document.\nA hierarchy of nodes.\nIt provides a way to interact with a web page using JavaScript and provides the functionality needed to build modern interactive user experiences."],
+         ['Why do browsers insert elements into the DOM that are missing from the HTML?', 'A fundamental tenet of the web is permissiveness. Browsers always do their best to display HTML, even when it has errors.'],
+         ['Are all text nodes the same?', 'Yes. However, developers sometimes make a distinction between empty nodes (spaces, tabs, newlines, etc.) and text nodes that contain content (words, numbers, symbols, etc.).']
+       ]
      end
    
-     def random_card 
+     def random_card
        @cards.sample
      end
    end
@@ -143,10 +143,10 @@ Let's try that first.
      </body>
    </html>
    ```
-3. Replace the `body = "<html><body><h2>#{term}</h2><p>#{definition}</p></body></html>"` line with `body = File.read("views/random_card.html")`.
+3. Replace the `body = "<html><body><h2>#{term}</h2><p>#{definition}</p></body></html>"` line with `body = File.read('views/random_card.html')`.
    > If you restart your server and navigate to `localhost:9595/random_card` now, you will see that the response literally returns #{term} and #{definition} now, which is not what we want to present.
 
-The `body` variable now points to one long string: `"<!DOCTYPE html>\n<html>\n  <head>\n    <meta charset=\"UTF-8\">\n    <title>title</title>\n  </head>\n  <body>\n    <h2>\#{term}</h2>\n    <p>\#{definition}</p>\n  </body>\n</html>\n"`. I fiddled around a bit in `irb` before arriving at a solution that uses regex to find the embedded Ruby, extract the code, evaluate it, and replace the code and its marker syntax (i.e., #{}) with the result of the evaluations. 
+The `body` variable now points to one long string: `'<!DOCTYPE html>\n<html>\n  <head>\n    <meta charset=\"UTF-8\">\n    <title>title</title>\n  </head>\n  <body>\n    <h2>\#{term}</h2>\n    <p>\#{definition}</p>\n  </body>\n</html>\n'`. I fiddled around a bit in `irb` before arriving at a solution that uses regex to find the embedded Ruby, extract the code, evaluate it, and replace the code and its marker syntax (i.e., #{}) with the result of the evaluations. 
 
 4. Update the `codecards.rb` to incorporate the new templating functionality.
    ```ruby
@@ -157,12 +157,12 @@ The `body` variable now points to one long string: `"<!DOCTYPE html>\n<html>\n  
        case env['REQUEST_PATH']
        when '/'
          status = 200
-         headers = {'Content-Type' => 'text/html'}
+         headers = { 'Content-Type' => 'text/html' }
          body = '<html><body><h1>Hello World</h1></body></html>'
        when '/random_card'
          term, definition = Cards.new.random_card
          status = 200
-         headers = {'Content-Type' => 'text/html'}
+         headers = { 'Content-Type' => 'text/html' }
          body = File.read('views/random_card.html') 
          template_regex = /#\{.+?\}/
          matches = body.scan(template_regex)
@@ -171,7 +171,7 @@ The `body` variable now points to one long string: `"<!DOCTYPE html>\n<html>\n  
          end
        else
          status = 404 
-         headers = {'Content-Type' => 'text/html', 'Content-Length'=> '48'}
+         headers = { 'Content-Type' => 'text/html', 'Content-Length'=> '48' }
          body = '<html><body><h4>404 Not Found</h4></body></html>'
        end
        response(status, headers, body)
@@ -195,57 +195,57 @@ It would be a good idea to extract the template-handling functionality to its ow
 While we're at it, we could move the `response` and `extract_expression` methods as well. The tutorial does this in Part 4, creating a class called `Monroe` to serve as the framework. I called mine Gizzard, because my cat loves chicken gizzards.
 
 5. Create a file `gizzard.rb` with the following contents.
-```ruby
-class Gizzard 
-  def response(status, headers={}, body='')
-    [status, headers, [body]]
-  end
+   ```ruby
+   class Gizzard 
+     def response(status, headers={}, body='')
+       [status, headers, [body]]
+     end
+   
+     def erb_result(name)
+       html = File.read("views/#{name}.html") 
+       template_regex = /#\{.+?\}/
+       matches = html.scan(template_regex)
+       matches.each do |match|
+         html.sub!(match, eval(extract_expression(match), binding_object))
+       end
+       html
+     end
+   
+     def extract_expression(enclosed_code)
+       captures = /#\{(.+)\}/.match(enclosed_code).captures
+       raise NotImplementedError if captures.size > 1
+       captures[0]
+     end
+   end
+   ```
 
-  def erb_result(name)
-    html = File.read("views/#{name}.html") 
-    template_regex = /#\{.+?\}/
-    matches = html.scan(template_regex)
-    matches.each do |match|
-      html.sub!(match, eval(extract_expression(match), binding_object))
-    end
-    html
-  end
-
-  def extract_expression(enclosed_code)
-    captures = /#\{(.+)\}/.match(enclosed_code).captures
-    raise NotImplementedError if captures.size > 1
-    captures[0]
-  end
-end
-```
-
-`codecards.rb` should now look like the following.
-```ruby
-require_relative 'cards'
-require_relative 'gizzard'
-
-class CodeCards < Gizzard
-  def call(env)
-    case env['REQUEST_PATH']
-    when '/'
-      status = 200
-      headers = { 'Content-Type' => 'text/html' }
-      body = '<html><body><h1>Hello World</h1></body></html>'
-    when '/random_card'
-      term, definition = Cards.new.random_card
-      status = 200
-      headers = { 'Content-Type' => 'text/html' }
-      binding_object = binding
-      body = erb_result(:random_card, binding_object)
-    else
-      status = 404
-      headers = { 'Content-Type' => 'text/html', 'Content-Length' => '48' }
-      body = '<html><body><h4>404 Not Found</h4></body></html>'
-    end
-    response(status, headers, body)
-  end
-end
-```
+   `codecards.rb` should now look like the following.
+   ```ruby
+   require_relative 'cards'
+   require_relative 'gizzard'
+   
+   class CodeCards < Gizzard
+     def call(env)
+       case env['REQUEST_PATH']
+       when '/'
+         status = 200
+         headers = { 'Content-Type' => 'text/html' }
+         body = '<html><body><h1>Hello World</h1></body></html>'
+       when '/random_card'
+         term, definition = Cards.new.random_card
+         status = 200
+         headers = { 'Content-Type' => 'text/html' }
+         binding_object = binding
+         body = erb_result(:random_card, binding_object)
+       else
+         status = 404
+         headers = { 'Content-Type' => 'text/html', 'Content-Length' => '48' }
+         body = '<html><body><h4>404 Not Found</h4></body></html>'
+       end
+       response(status, headers, body)
+     end
+   end
+   ```
    Note the addition of the lines referencing `binding` and `binding_object`. If we did not use bindings, our code would throw an error, because the variables `term` and `definition` will not be in scope in the `gizzard.rb` file.
 
    > Why? An instance of `Binding` encapsulates the local variable bindings in effect at a given point in execution. A top-level method called `binding` returns whatever the current binding is. The most common use of `Binding` objects is in the position of second argument to `eval`. If you provide a binding in that position, the string being `eval`-ed is executed in the context of the given binding. Any local variables used inside the `eval` string are interpreted in the context of that binding. (Reference: David Black's The Well-Grounded Rubyist 2E (2014), Manning, page 434)
