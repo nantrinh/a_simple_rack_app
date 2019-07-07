@@ -146,8 +146,53 @@ Let's try that first.
    </html>
    ```
 3. Replace the `body = "<html><body><h2>#{term}</h2><p>#{definition}</p></body></html>"` line with `body = File.read("views/random_card.html")`.
-   > If you restart your server and navigate to `localhost:9595/random_card` now, you will see that the response is literally #{term} and #{definition}, which is not what we want to present. 
+   > If you restart your server and navigate to `localhost:9595/random_card` now, you will see that the response literally returns #{term} and #{definition} now, which is not what we want to present.
 
+The `body` variable now points to one long string: `"<!DOCTYPE html>\n<html>\n  <head>\n    <meta charset=\"UTF-8\">\n    <title>title</title>\n  </head>\n  <body>\n    <h2>\#{term}</h2>\n    <p>\#{definition}</p>\n  </body>\n</html>\n"`. I fiddled around a bit in `irb` before arriving at a solution that uses regex to find the embedded Ruby, extract the code, evaluate it, and replace the code and its marker syntax (i.e., #{}) with the result of the evaluations. 
+
+4. Update the `codecards.rb` to incorporate the new templating functionality.
+```ruby
+require_relative 'cards'
+
+class CodeCards 
+  def call(env)
+    case env['REQUEST_PATH']
+    when '/'
+      status = 200
+      headers = {'Content-Type' => 'text/html'}
+      body = "<html><body><h1>Hello World</h1></body></html>"
+      response(status, headers, body)
+    when '/random_card'
+      term, definition = Cards.new.random_card
+      status = 200
+      headers = {'Content-Type' => 'text/html'}
+      body = File.read("views/random_card.html") 
+      template_regex = /#\{.+?\}/
+      matches = body.scan(template_regex)
+      matches.each do |match|
+        body.sub!(match, eval(extract_expression(match)))
+      end
+      response(status, headers, body)
+    else
+      status = 404 
+      headers = {'Content-Type' => 'text/html', 'Content-Length'=> '48'}
+      body = "<html><body><h4>404 Not Found</h4></body></html>"
+      response(status, headers, body)
+    end
+  end
+
+  def response(status, headers={}, body='')
+    [status, headers, [body]]
+  end
+
+  def extract_expression(enclosed_code)
+    captures = /#\{(.+)\}/.match(enclosed_code).captures
+    raise NotImplementedError if captures.size > 1
+    captures[0]
+  end
+end
+```
+   > Restart your server and navigate to the `'/random_card'` path. You should see a term and definition now, as intended.
 
 # WORK IN PROGRESS 
 To this end, the tutorial makes use of [ERB](https://www.stuartellis.name/articles/erb/), which is part of the Ruby standard library. You do not need to install any other software to use it.
