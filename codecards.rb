@@ -1,6 +1,7 @@
 require_relative 'cards'
+require_relative 'gizzard'
 
-class CodeCards 
+class CodeCards < Gizzard
   def call(env)
     case env['REQUEST_PATH']
     when '/'
@@ -12,12 +13,8 @@ class CodeCards
       term, definition = Cards.new.random_card
       status = 200
       headers = {'Content-Type' => 'text/html'}
-      body = File.read("views/random_card.html") 
-      template_regex = /#\{.+?\}/
-      matches = body.scan(template_regex)
-      matches.each do |match|
-        body.sub!(match, eval(extract_expression(match)))
-      end
+      binding_object = binding
+      body = erb_result(:random_card, binding_object)
       response(status, headers, body)
     else
       status = 404 
@@ -25,15 +22,5 @@ class CodeCards
       body = "<html><body><h4>404 Not Found</h4></body></html>"
       response(status, headers, body)
     end
-  end
-
-  def response(status, headers={}, body='')
-    [status, headers, [body]]
-  end
-
-  def extract_expression(enclosed_code)
-    captures = /#\{(.+)\}/.match(enclosed_code).captures
-    raise NotImplementedError if captures.size > 1
-    captures[0]
   end
 end
