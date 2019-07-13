@@ -192,7 +192,7 @@ The `body` variable now points to one long string: `'<!DOCTYPE html>\n<html>\n  
 
 It would be a good idea to extract the template-handling functionality to its own method, to keep the `call` method clean, and so we can reuse it if we wanted to generate dynamic HTML pages for other paths.
 
-While we're at it, we could move the `response` and `extract_expression` methods as well. The tutorial does this in Part 4, creating a class called `Monroe` to serve as the framework. I called mine Gizzard, because my cat loves chicken gizzards.
+While we're at it, we could move the `response` and `extract_expression` methods as well. The tutorial does this in Part 4, creating a class called `Monroe` to serve as the framework. I called mine `Gizzard`, because my cat loves chicken gizzards.
 
 5. Create a file `gizzard.rb` with the following contents.
    ```ruby
@@ -249,6 +249,25 @@ While we're at it, we could move the `response` and `extract_expression` methods
    Note the addition of the lines referencing `binding` and `binding_object`. If we did not use bindings, our code would throw an error, because the variables `term` and `definition` will not be in scope in the `gizzard.rb` file.
 
    > Why? An instance of `Binding` encapsulates the local variable bindings in effect at a given point in execution. A top-level method called `binding` returns whatever the current binding is. The most common use of `Binding` objects is in the position of second argument to `eval`. If you provide a binding in that position, the string being `eval`-ed is executed in the context of the given binding. Any local variables used inside the `eval` string are interpreted in the context of that binding. (Reference: David Black's The Well-Grounded Rubyist 2E (2014), Manning, page 434)
+
+# Use ERB Syntax
+
+The next thing I would like to do is to display several sets of cards on the website. For simplicity, I would start with sets that I have created and stored on my computer. I will work on allowing user input later.
+
+How should I go about this given the current set of tools? Imagine I have three sets (e.g., one for Ruby syntax, one for JavaScript syntax, and one for the DOM). One way would be to create a template for each set. In the app code, I would add the functionality to handle 3 paths, each one leading to a different set. For a given set, I would read the data in from a file, and parse it in a format `cards = [[term, definition], [term, definition], ...]`. I would have a separate template for each set, explicitly written to display the exact number of cards per set. The nth term would be selected as `cards[n][0]`, and the nth definition would be selected as `cards[n][1]`.
+
+This would work, but it would be tedious to create a template for each set, and difficult to maintain. Also, there is much duplication of work, because the template for each set would look very similar, varying only in the number of cards each template is designed to handle. Ideally we would be able to have one template for the purpose of displaying all cards in a set, and the template would loop through each subarray in the array of cards, generating html to display each term and definition in turn.
+
+Right now the `erb_result` method in the `Gizzard` framework evaluates embedded code and inserts the result of each evaluation where the embedded code once was. I do not think it is possible to use `each` with an array of cards to achieve the desired result, without much modification that would complicate the code.
+
+ERB uses the syntax as displayed below to distinguish between code that it will evaluate only, and code that it will evaluate AND replace with the result. 
+```
+<% Ruby code -- inline with output %>
+<%= Ruby expression -- replace with result %>
+```
+
+I could mimic this function by introducting a syntax "#{% %}" or something else to denote evaluation and evaluation without replacement, but I think that it is beneficial to conform to industry standards, and will update the `erb_result` method to use this syntax. It will also make it easier to switch to the ERB library later if desired.
+
 
 # TODO
 - allow user to view all cards by set (e.g., quizlet.com/user/set)

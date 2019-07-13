@@ -1,4 +1,6 @@
 class Cards
+  attr_reader :cards
+
   def initialize
     @cards = [
       ['What is the DOM (Document Object Model)?', "An in-memory object representation of an HTML document.\nA hierarchy of nodes.\nIt provides a way to interact with a web page using JavaScript and provides the functionality needed to build modern interactive user experiences."],
@@ -9,5 +11,16 @@ class Cards
 
   def random_card
     @cards.sample
+  end
+
+  def self.from_file(path_to_file)
+    data = File.read(path_to_file)
+    cards = data.split("\n\n# ").map{|card| card.split("\n---\n")}
+    cards.each do |card|
+      card.each do |term, _|
+        term.sub!(/^# /, '')
+      end
+    end
+    cards
   end
 end
