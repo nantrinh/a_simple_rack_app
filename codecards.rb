@@ -13,14 +13,14 @@ class CodeCards < Gizzard
       status = 200
       headers = { 'Content-Type' => 'text/html' }
       binding_object = binding
-      body = erb_result(:random_card, binding_object)
+      body = erb(:random_card, binding_object)
     when '/0/0'
       status = 200
       headers = { 'Content-Type' => 'text/html' }
       cards = Cards.from_file('data/temp.txt')
       # todo: render an html page that displays each term and definition
       binding_object = binding
-      body = erb_result(:set, binding_object)
+      body = erb(:set, binding_object)
     else
       status = 404
       headers = { 'Content-Type' => 'text/html', 'Content-Length' => '48' }
