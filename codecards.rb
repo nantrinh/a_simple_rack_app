@@ -5,10 +5,6 @@ def response(status, headers={}, body='')
   [status, headers, [body]]
 end
 
-def titles(index)
-  ['The DOM', 'APIs', 'Core Ruby Tools'][index]
-end
-
 get '/' do
   @title = 'Sets' 
   @set_names = File.readlines('data/set_names.txt')
@@ -21,11 +17,14 @@ get '/random_card' do
 end
 
 get '/:user_id/:set_id' do |user_id, set_id|
-  redirect not_found unless user_id.to_i.zero? && [0, 1, 2].include?(set_id.to_i)
   @nav_title = 'Sets'
   @set_names = File.readlines('data/set_names.txt')
+
+  redirect not_found unless user_id.to_i.zero? && \
+    (0...@set_names.size).cover?(set_id.to_i)
+
   @cards = Cards.from_file("data/#{set_id}.txt")
-  @title = titles(set_id.to_i) 
+  @title = @set_names[set_id.to_i] 
   erb :set
 end
 
