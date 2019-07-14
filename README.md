@@ -383,8 +383,13 @@ alert('Hello world!');
 ```
 
 # Add More Sets
-I added two more sets and titles for each of them. See [commit]() for the `txt` files.
-`codecards.rb`
+I added two more sets and titles for each of them.
+The sets are located here:
+- [`0.txt`](https://github.com/nantrinh/a_simple_rack_app/blob/8a0a0661e7201f3d402dc231ebbef389ba109e11/data/0.txt)
+- [`1.txt`](https://github.com/nantrinh/a_simple_rack_app/blob/8a0a0661e7201f3d402dc231ebbef389ba109e11/data/1.txt)
+- [`2.txt`](https://github.com/nantrinh/a_simple_rack_app/blob/8a0a0661e7201f3d402dc231ebbef389ba109e11/data/2.txt)
+
+Updated `codecards.rb`:
 ```ruby
 require_relative 'cards'
 require_relative 'gizzard'
@@ -433,7 +438,7 @@ class CodeCards < Gizzard
 end
 ```
 
-`set.rhtml`
+Updated `set.rhtml`:
 ```html
 <!DOCTYPE html>
 <html>
