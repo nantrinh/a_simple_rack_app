@@ -458,9 +458,13 @@ Updated `set.rhtml`:
 </html>
 ```
 
+# Use Sinatra
+There is now substantial repetition in the codecards file for the paths pertaining to the paths.
+
+Let's switch to using the Sinatra framework since it has nice syntax for handling routes.
+
+
 # Detailed TODO 
-- Add two more set pages
-- Convert to sinatra syntax to take advantage of routing niceties
 - Add CSS: Put cards on set pages in a table
     - render the newlines as specified in the text documents
 - Add links to these set pages on the homepage

@@ -2,12 +2,12 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title><%= title %></title>
+    <title><%= @title %></title>
   </head>
   <body>
-    <h1><%= title %></h1>
+    <h1><%= @title %></h1>
     <dl>
-    <% cards.each do |term, definition| %>
+    <% @cards.each do |term, definition| %>
       <dt><%= term %></dt>
       <dd><%= definition %></dd>
     <% end %>
