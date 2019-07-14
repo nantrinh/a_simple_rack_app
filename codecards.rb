@@ -17,8 +17,22 @@ class CodeCards < Gizzard
     when '/0/0'
       status = 200
       headers = { 'Content-Type' => 'text/html' }
-      cards = Cards.from_file('data/temp.txt')
-      # todo: render an html page that displays each term and definition
+      cards = Cards.from_file('data/0.txt')
+      title = 'The DOM'
+      binding_object = binding
+      body = erb(:set, binding_object)
+    when '/0/1'
+      status = 200
+      headers = { 'Content-Type' => 'text/html' }
+      title = 'APIs'
+      cards = Cards.from_file('data/1.txt')
+      binding_object = binding
+      body = erb(:set, binding_object)
+    when '/0/2'
+      status = 200
+      headers = { 'Content-Type' => 'text/html' }
+      title = 'Core Ruby Tools'
+      cards = Cards.from_file('data/2.txt')
       binding_object = binding
       body = erb(:set, binding_object)
     else

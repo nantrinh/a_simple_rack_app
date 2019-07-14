@@ -1,216 +1,32 @@
-# What is the DOM (Document Object Model)?
+# What is XMLHttpRequest?
 ---
-An in-memory object representation of an HTML document.
-A hierarchy of nodes.
-It provides a way to interact with a web page using JavaScript and provides the functionality needed to build modern interactive user experiences.
+One of the browser APIs that provide network programming functionality to JavaScript applications. Libraries or utility functions often wrap this web API.
+The name comes from its original use, which was to fetch XML documents over HTTP. Today, we use this object to load any data (typically HTML or JSON) and can use other protocols (including file://) as well.
 
-# Why do browsers insert elements into the DOM that are missing from the HTML?
+# What is AJAX?
 ---
-A fundamental tenet of the web is permissiveness. Browsers always do their best to display HTML, even when it has errors.
+AJAX is short for Asynchronous JavaScript and XML. Its main feature is that it allows browsers to issue requests and process responses without a full page refresh.
 
-# Are all text nodes the same?
+AJAX requests are just like normal requests: they are sent to the server with all the normal components of an HTTP request, and the server handles them like any other request. The only difference is that instead of the browser refreshing and processing the response, the response is processed by a callback function, which is usually some client-side JavaScript code.
+
+# What is an API?
 ---
-Yes. However, developers sometimes make a distinction between empty nodes (spaces, tabs, newlines, etc.) and text nodes that contain content (words, numbers, symbols, etc.).
+API stands for Application Programming Interface.
+They provide functionality for use by another program.
 
-# Are empty nodes reflected visually in the browser?
+Examples:
+- Every programming language has a built-in API that is used to write programs.
+- Mobile devices provide APIs to provide access to location or other sensor data, such as the device's GPS location or the orientation of the device.
+- Operating systems have APIs that programs can use to open files, access memory, draw text on the screen, etc.
+
+# What are web APIs?
 ---
-No, but they are in the DOM, so do not neglect them.
+APIs that use the HTTP protocol.
 
-# True or False: there is a direct one-to-one mapping between the tags that appear in an HTML file and the nodes in the DOM.
+# What is an API provider? What is an API consumer?
 ---
-False. The browser may insert nodes that don't appear in the HTML due to invalid markup or the omission of optional tags. Text, including whitespace, also creates nodes that don't map to tags.
+API provider: the system that provides an API for other parties to use.
+GitHub is the provider of the GitHub API, and Dropbox is the provider of the Dropbox API.
 
-# True or False: Text nodes sometimes contain nothing but whitespace.
----
-True. All text -- including whitespace -- in the original HTML appears in the DOM as a text node.
-
-# What is the top-most DOM node?
----
-The parent of all nodes in the DOM. It represents the entire HTML document.
-
-# What is the nodeName property?
----
-For elements, it is the name of the corresponding tag in uppercase. The use of uppercase is a historical throwback to a time when standard practice was to write uppercase HTML tags; contemporary HTML uses lowercase tags, but this method still returns uppercase names.
-For text nodes -- even empty nodes -- the nodeName is "#text".
-For comments, it's "#comment".
-
-# What is the nodeType property?
----
-It returns a number that matches a node type constant.
-THe most comment types are:
-1: Node.ELEMENT_NODE
-3: Node.TEXT_NODE
-8: Node.COMMENT_NODE
-9: Node.DOCUMENT_NODE
-Use the constant names instead of the numeric values to write clear code that checks the node type.
-```
-p.nodeType === Node.ELEMENT_NODE // true
-document.nodeType === Node.DOCUMENT_NODE // true
-```
-
-# What is the nodeValue property?
----
-References the value of a node.
-Elements do not have values. `p.nodeValue === null`
-The nodeValue of a text node is the textual content of a node. It grabs text up to the next opening or closing tag.
-
-# What is the textContent property?
----
-textContent represents the textual content of all the nodes inside the Element. You can think of it as the nodeValue for all the Element's child nodes concatenated into a single String. For example, if we access the paragraph's textContent property, it contains the content of the Text nodes directly inside the tag as well as the text within the a Node that the p Node contains.
-textContent joins the nodeValues of all child Text Nodes together, including the empty Nodes, which leads to excess whitespace.
-
-# What are some important things to remember about these types?
-EventTarget, Node, Text, Element
----
-EventTarget provides the event-handling behavior that supports interactive web applications.
-Node provides common behavior to all nodes.
-Text and Element are the chief subtypes of Node.
-Text nodes hold text.
-Element nodes represent HTML tags.
-Most HTML tags map to specific element subtypes that inherit from HTMLElement (which inherits from Element).
-Other element types exist, such as SVGElement and its subtypes.
-
-# What are two recommended ways to determine a node type in interactive console sessions using the browser's developer tools?
----
-(1) `toString` method or the `String` constructor on the node
-For most nodes, the return value of toString() and String() is the node type's name, but not all node types behave so well. For example, HTMLAnchorElement implements toString() in a way that causes it to return the URL from the link. Customized toString() methods like this exist for some other Elements as well. 
-(2) `constructor`, whcih references a function that creates Objects of the appropriate Element type. The value is browser-dependent though.
-
-# What is the recommended way to determine a node type in a program?
----
-`instanceOf`. The downside here is that you have to test against a particular Element type. 
-Example:
-```
-var p = document.querySelector('p');
-p instanceof HTMLParagraphElement; // false
-p instanceof HTMLAnchorElement; // false
-p instanceof Element; // true
-```
-
-# How do you determine the tag name of an element?
----
-`element.tagName;` Remember that this property has an uppercase value.
-
-# What Element methods can we use to (a) retrieve the value of an attribute, (b) set the value of an attribute, and (c) check whether the element has a particular attribute?
----
-(a) getAttribute(attributeName); // returns the value of the attribute as a string
-(b) setAttribute(attributeName, newValue); // returns undefined
-(c) hasAttribute(attributeName); // true or false
-
-# What is the difference between the `className` property and `classList` property?
----
-`className` returns the string value of the `class` attribute.
-`classList` returns an array-like `DOMTokenList` object with the methods add(name), remove(name), toggle(name), contains(name), and length.
-`classList` may be more convenient to work with if you have multiple classes.
-
-# What is the `style` property?
----
-It references a `CSSStyleDeclaration` object. You can use it to alter any CSS property of an element.
-
-Most applications don't use the style property often; it's easier and more manageable to use classes in your stylesheet to alter the characteristics of your elements. You can add or remove CSS class names to or from any DOM Element.
-
-Example:
-```
-var h1 = document.querySelector('h1');
-h1.style; // CSSStyleDeclaration {alignContent: "", alignItems: "", alignSelf: "", alignmentBaseline: "", all: "", ...}
-h1.style.color = 'red';
-h1.style.color = null; // removes a property
-h1.style.lineHeight = '3em'; // when a CSS property's name contains dashes, you must use a camelCased version of the name to access that property
-```
-
-# How do you get an element by its id?
----
-`document.getElementById(id)`
-
-# What do the methods `Document.getElementsByTagName(tagName)` and `Document.getElementsByClassName(className)` return?
----
-`HTMLCollection` or `NodeList` of matching elements, depending on the browser.
-To loop through these collections, use a `for` loop or convert the object into an array then use the higher-order array functions.
-
-# What are "live collections"?
----
-Collections automatically update to reflect changes in the DOM.
-HTML Collections seem to be always live.
-A nodeList may or may not be live.
-
-# What do these methods return?
-`Document.querySelector(selectors)`
-`Document.querySelectorAll(selectors)`
----
-first matching element or `null`
-`NodeList` of matching elements
-
-Most valid CSS selectors work as arguments to `querySelector` and `querySelectorAll`.
-
-# What approach should you take if you want to update text with JavaScript?
----
-place the text you need to update within a specific element such as a span or div, identified with a class.
-Example: if you have
-```
-<!doctype html>
-<html lang="en-US">
-  <head>
-    <title>My Site</title>
-  </head>
-  <body>
-    <div>
-      Welcome to the site!<br>
-      The time is <span class="time">9:15 am</span>.<br>
-      You are logged in as <a href="/account">Kabu</a>.
-    </div>
-  </body>
-</html>
-```
-All you need to do is `document.querySelector('.time').textContent = '9:16 am';`
-
-# What are three ways to create a new node?
----
-`document.createElement(tagName)`
-`document.createTextNode(text)`
-`node.cloneNode(deepClone)` // where deepClone is true or false
-
-# What do the following methods do?
-`parent.appendChild(node)`
-`parent.insertBefore(node, targetNode)`
-`parent.replaceChild(node, targetNode)`
----
-- Append node to the end of parent.childNodes (note that document.appendChild causes an error. Use document.body.appendChild instead)
-- Insert node into parent.childNodes before targetNode
-- Remove targetNode from parent.childNodes and insert node in its place
-
-# What happens if you try to add a node that already exists in the DOM, to another location?
----
-It gets removed from the original location. Thus, you can move an existing node by inserting it where you want it.
-
-# What do the following methods do? What are valid values for `position`?
-`element.insertAdjacentElement(position, newElement)`
-`element.insertAdjacentText(position, text)`
----
-Inserts newElement at position relative to element
-Inserts Text node that contains text at position relative to element
-
-`position` may be one of the following values:
-- "beforebegin" (before the element)
-- "afterbegin" (before the first child of the element)
-- "beforeend" (after the last child of the element)
-- "afterend" (after the element)
-
-# What are to ways to remove a node from the DOM?
----
-node.remove()
-parent.removeChild(node)
-
-# What happens when you remove a node from the DOM?
----
-It becomes eligible for garbage collection unless you keep a reference to the node in a variable.
-
-# Are these components part of the DOM?
-- the windows used to display web pages
-- the browser's history
-- sensors, including location
----
-No, they are part of the browser object model (BOM).
-
-# How do the `textContent` and `innerText` properties differ?
----
-innerText is aware of the rendered appearance of text, while textContent is not
+API consumer: the system that uses the API to accomplish some work.
+When you check the weather on your phone, it is running a program that is consuming a weather API to retrieve forecast data.

@@ -1,0 +1,30 @@
+# Why is the system version of Ruby on Linux suboptimal for development?
+---
+1. The installation is usually an older version of Ruby
+2. You may need root access to install and manipulate other Ruby components.
+
+# Your system version of Ruby is suboptimal for development. What should you do?
+---
+Install a Ruby version manager.
+Use the version manager to install the Ruby version(s) you need.
+
+# Besides the `ruby` command, what other files and tools does a Ruby installation contain? Name 6.
+---
+1. The core library
+2. The standard Library
+3. The irb REPL (Read Evaluate Print Loop)
+4. The rake utility: a tool to automate Ruby development tasks
+5. The gem command: a tool to manage RubyGems
+6. Documentation tools (rdoc and ri)
+
+# What are Gems?
+---
+Packages that you can download, install, and use in your Ruby programs or from the command line.
+
+# What happens when you run `gem install GEM_NAME`?
+---
+The `gem` command connects to the remote library, downlaods the appropriate Gems, and installs them.
+
+# Where are gems installed on your computer?
+---
+The exact location depends on your setup. Run `gem env` and look for "INSTALLATION DIRECTORY" to see where `gem` installs Gems by default.  
