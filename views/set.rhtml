@@ -5,12 +5,22 @@
     <title><%= @title %></title>
   </head>
   <body>
-    <h1><%= @title %></h1>
-    <dl>
-    <% @cards.each do |term, definition| %>
-      <dt><%= term %></dt>
-      <dd><%= definition %></dd>
-    <% end %>
-    </dl>
+    <nav>
+      <h1><%= @nav_title %></h1>
+      <ul>
+      <% @set_names.each do |name| %>
+        <li><a href="#"><%= name %></a></li>
+      <% end %>
+      </ul>
+    </nav>
+    <article>
+      <h1><%= @title %></h1>
+      <dl>
+      <% @cards.each do |term, definition| %>
+        <dt><%= term %></dt>
+        <dd><%= definition %></dd>
+      <% end %>
+      </dl>
+    </article>
   </body>
 </html>
