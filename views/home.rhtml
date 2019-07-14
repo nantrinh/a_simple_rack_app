@@ -2,14 +2,16 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title><%= @title %></title>
+    <title>CodeCards</title>
   </head>
   <body>
-    <h1><%= @title %></h1>
-    <ul>
-    <% @set_names.each do |name| %>
-      <li><a href="#"><%= name %></a></li>
-    <% end %>
-    </ul>
+    <nav>
+      <h1><%= @title %></h1>
+      <ul>
+      <% @set_names.each_with_index do |name, index| %>
+        <li><a href="0/<%= index %>"><%= name %></a></li>
+      <% end %>
+      </ul>
+    </nav>
   </body>
 </html>
