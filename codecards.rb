@@ -1,13 +1,12 @@
 require 'sinatra'
 require_relative 'cards'
 
-def response(status, headers={}, body='')
-  [status, headers, [body]]
+before do
+  @set_names = File.readlines('data/set_names.txt')
 end
 
 get '/' do
   @title = 'Sets' 
-  @set_names = File.readlines('data/set_names.txt')
   erb :home
 end
 
@@ -18,7 +17,6 @@ end
 
 get '/:user_id/:set_id' do |user_id, set_id|
   @nav_title = 'Sets'
-  @set_names = File.readlines('data/set_names.txt')
 
   redirect not_found unless user_id.to_i.zero? && \
     (0...@set_names.size).cover?(set_id.to_i)
