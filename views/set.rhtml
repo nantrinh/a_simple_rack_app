@@ -7,7 +7,7 @@
   <body>
     <main>
     <aside>
-      <nav>
+      <nav class="main-nav">
         <h1>Sets</h1>
         <ul>
         <% @set_names.each_with_index do |name, index| %>
@@ -16,14 +16,16 @@
         </ul>
       </nav>
     </aside>
-    <article>
+    <article class="main-set">
       <h1><%= @title %></h1>
-      <dl>
+      <table>
       <% @cards.each do |term, definition| %>
-        <dt><%= term %></dt>
-        <dd><%= definition %></dd>
+        <tr>
+          <td><%= term %></td>
+          <td><%= definition %></td>
+        </tr>
       <% end %>
-      </dl>
+      </table>
     </article>
     </main>
   </body>

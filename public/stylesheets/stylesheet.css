@@ -21,3 +21,49 @@ body > header > nav > h2 {
   font-size: 1.2rem;
   justify-self: end;
 }
+
+main {
+  display: grid;
+  grid-template-areas:
+    "main-nav main-set";
+  grid-column-gap: 0.5rem;
+}
+
+.main-nav {
+  grid-area: main-nav;
+  border: none;
+  padding: 4rem 2rem;
+}
+
+.main-nav > h1 {
+  font-size: 1.2rem;
+  margin-bottom: 0;
+}
+
+.main-nav ul {
+  margin-top: 0;
+  padding-inline-start: 20px;
+}
+
+.main-nav li {
+  font-size: 1rem;
+}
+
+.main-set {
+  grid-area: main-set;
+  max-width: 1200px;
+  padding: 2rem 0;
+  white-space: pre-line;
+}
+
+.main-set td {
+  padding: 1rem;
+} 
+
+table {
+  border-collapse: collapse;
+}
+
+td {
+  border: 1px solid #aaa;
+}
