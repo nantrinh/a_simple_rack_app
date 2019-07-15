@@ -463,17 +463,17 @@ There is now substantial repetition in the codecards file for the paths pertaini
 
 Let's switch to using the Sinatra framework since it has nice syntax for handling routes.
 
-
 # Detailed TODO 
-- Add CSS: Put cards on set pages in a table
-    - render the newlines as specified in the text documents
-- Add links to these set pages on the homepage
-- Make a flashcards template
-- Use javascript??
+- Continue with Launch School web development course
+- Make a flashcards template and enable flipping cards -- do it through links first then use javascript??
 - Use database
 - Allow user to input cards
 - Allow user to import their cards (from text file)
 - Allow user to download cards from quizlet
+
+# Workflow Optimization TODO
+- HTML style checkers, CSS style checkers
+- Automate rubocop?
 
 # TODO
 - allow user to view all cards by set (e.g., quizlet.com/user/set)
