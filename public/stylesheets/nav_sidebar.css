@@ -1,0 +1,23 @@
+.nav-sidebar {
+  grid-area: nav-sidebar;
+  border: none;
+  padding: 4rem 2rem;
+}
+
+.nav-sidebar > h1 {
+  font-size: 1.2rem;
+  margin-bottom: 0;
+}
+
+.nav-sidebar ul {
+  margin-top: 0;
+  padding-inline-start: 20px;
+}
+
+.nav-sidebar li {
+  font-size: 1rem;
+}
+
+.nav-sidebar a:hover {
+  color: #cc0202;
+}

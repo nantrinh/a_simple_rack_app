@@ -18,15 +18,30 @@ get '/random_card' do
 end
 
 get '/:user_id/:set_id' do |user_id, set_id|
-  @nav_title = 'Sets'
+  @set_id = set_id.to_i
+  @user_id = user_id.to_i
 
-  redirect not_found unless user_id.to_i.zero? && \
-    (0...@set_names.size).cover?(set_id.to_i)
+  redirect not_found unless @user_id.zero? && \
+    (0...@set_names.size).cover?(@set_id)
 
-  @cards = Cards.from_file("data/#{set_id}.txt")
-  @title = @set_names[set_id.to_i] 
-  erb :nav_on_left do
+  @cards = Cards.from_file("data/#{@set_id}.txt")
+  @title = @set_names[@set_id] 
+  erb :nav_sidebar do
     erb :set
+  end
+end
+
+get '/:user_id/:set_id/flashcards' do |user_id, set_id|
+  @set_id = set_id.to_i
+  @user_id = user_id.to_i
+
+  redirect not_found unless @user_id.zero? && \
+    (0...@set_names.size).cover?(@set_id)
+
+  @cards = Cards.from_file("data/#{@set_id}.txt")
+  @title = @set_names[@set_id] 
+  erb :nav_sidebar do
+    erb :flashcards
   end
 end
 

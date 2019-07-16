@@ -2,12 +2,12 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/stylesheets/nav_sidebar.css" type="text/css">
     <title><%= @title %></title>
   </head>
   <body>
-    <main>
     <aside>
-      <nav class="main-nav">
+      <nav class="nav-sidebar">
         <h1><a href="/">Sets</a></h1>
         <ul>
         <% @set_names.each_with_index do |name, index| %>
@@ -17,6 +17,5 @@
       </nav>
     </aside>
     <%= yield %>
-    </main>
   </body>
 </html>

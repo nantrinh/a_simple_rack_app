@@ -2,13 +2,13 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/stylesheets/set.css" type="text/css">
     <title><%= @title %></title>
   </head>
   <body>
-    <main>
-    <article class="main-set">
+    <article class="set">
       <h1><%= @title %></h1>
-      <a class="button" href="0/<%= @set_id %>/flashcards">Study (Flashcards)</a>
+      <a class="button" href="/0/<%= @set_id %>/flashcards">Study (Flashcards)</a>
       <table>
       <% @cards.each do |term, definition| %>
         <tr>
@@ -18,6 +18,5 @@
       <% end %>
       </table>
     </article>
-    </main>
   </body>
 </html>

@@ -1,0 +1,30 @@
+body > header > nav {
+  background-color: #77090A;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas:
+    "logo username";
+  padding: 0 1rem;
+}
+
+body > header > nav > h1 {
+  grid-area: logo;  
+/*  background-color: green;*/
+  align-self: center;
+  justify-self: start;
+}
+
+body > header > nav > h2 {
+  grid-area: username;  
+/*  background-color: yellow;*/
+  align-self: center;
+  font-size: 1.2rem;
+  justify-self: end;
+}
+
+main {
+  display: grid;
+  grid-template-areas:
+    "nav-sidebar content";
+  grid-column-gap: 0.5rem;
+}
