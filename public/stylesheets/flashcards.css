@@ -1,5 +1,20 @@
 .card {
-  border: 2px solid #aaa;
   grid-area: main;
-  align-self: stretch;
+  align-self: center;
+  justify-self: center;
+
+  margin-top: 5rem;
+  width: 800px;
+  height: 500px; 
+  border: 2px solid #aaa;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card p {
+  font-size: 2rem;
+  padding: 5rem;
+  text-align: center;
 }
