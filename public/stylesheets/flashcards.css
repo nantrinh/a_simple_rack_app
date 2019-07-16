@@ -1,8 +1,10 @@
-.card {
+div.main {
   grid-area: main;
   align-self: center;
   justify-self: center;
+}
 
+article.card {
   margin-top: 5rem;
   width: 800px;
   height: 500px; 
@@ -17,4 +19,16 @@
   font-size: 2rem;
   padding: 5rem;
   text-align: center;
+}
+
+nav.card-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 2rem;
+}
+
+nav.card-controls:hover {
+  color: #cc0202;
 }

@@ -17,9 +17,9 @@ get '/random_card' do
   erb :random_card
 end
 
-get '/:user_id/:set_id' do |user_id, set_id|
-  @set_id = set_id.to_i
-  @user_id = user_id.to_i
+get '/:user_id/:set_id' do
+  @set_id = params['set_id'].to_i
+  @user_id = params['user_id'].to_i
 
   redirect not_found unless @user_id.zero? && \
     (0...@set_names.size).cover?(@set_id)
@@ -32,13 +32,32 @@ get '/:user_id/:set_id' do |user_id, set_id|
 end
 
 get '/:user_id/:set_id/flashcards' do |user_id, set_id|
-  @set_id = set_id.to_i
-  @user_id = user_id.to_i
+  redirect "/#{user_id}/#{set_id}/flashcards/0/term" 
+end
+
+get '/:user_id/:set_id/flashcards/:card_id/:side' do
+  @set_id = params['set_id'].to_i
+  @user_id = params['user_id'].to_i
+  @card_id = params['card_id'].to_i
 
   redirect not_found unless @user_id.zero? && \
-    (0...@set_names.size).cover?(@set_id)
+    (0...@set_names.size).cover?(@set_id) && \
+    ['term', 'definition'].include?(params['side'])
 
   @cards = Cards.from_file("data/#{@set_id}.txt")
+  redirect not_found unless (0...@cards.size).cover?(@card_id)
+
+  if params['side'] == 'term'
+    @display = @cards[@card_id][0] 
+    other_side = "definition"
+  else
+    @display = @cards[@card_id][1]
+    other_side = "term"
+  end
+
+  @flip_link = \
+    "/#{@user_id}/#{@set_id}/flashcards/#{@card_id}/#{other_side}" 
+
   @title = @set_names[@set_id] 
   erb :nav_sidebar do
     erb :flashcards
