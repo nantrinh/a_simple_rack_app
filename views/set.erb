@@ -1,0 +1,12 @@
+<article class="set">
+  <h1><%= @title %></h1>
+  <a class="button" href="/0/<%= @set_id %>/flashcards">Study (Flashcards)</a>
+  <table class="set">
+  <% @cards.each do |term, definition| %>
+    <tr>
+      <td><%= term %></td>
+      <td><%= definition %></td>
+    </tr>
+  <% end %>
+  </table>
+</article>

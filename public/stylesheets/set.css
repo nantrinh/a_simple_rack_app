@@ -1,5 +1,5 @@
 .set {
-  grid-area: content;
+  grid-area: main;
   max-width: 1200px;
   padding: 2rem 0;
 }
@@ -18,17 +18,14 @@
   background-color: #700000;
 }
 
-.set td {
-  padding: 1rem;
-} 
-
-table {
+.set table {
   border-collapse: collapse;
   margin: 3rem 0;
 }
 
-td {
+.set td {
   border: 1px solid #aaa;
+  padding: 1rem;
   white-space: pre-line;
 }
 

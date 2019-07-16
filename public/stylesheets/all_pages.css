@@ -24,7 +24,8 @@ body > header > nav > h2 {
 
 main {
   display: grid;
+  grid-template-columns: 205px auto;
   grid-template-areas:
-    "nav-sidebar content";
+    "nav-sidebar main";
   grid-column-gap: 0.5rem;
 }
