@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title><%= @title %></title>
+  </head>
+  <body>
+    <main>
+    <aside>
+      <nav class="main-nav">
+        <h1><a href="/">Sets</a></h1>
+        <ul>
+        <% @set_names.each_with_index do |name, index| %>
+          <li><a href="/0/<%= index %>"><%= name %></a></li>
+        <% end %>
+        </ul>
+      </nav>
+    </aside>
+    <%= yield %>
+    </main>
+  </body>
+</html>

@@ -25,7 +25,9 @@ get '/:user_id/:set_id' do |user_id, set_id|
 
   @cards = Cards.from_file("data/#{set_id}.txt")
   @title = @set_names[set_id.to_i] 
-  erb :set
+  erb :nav_on_left do
+    erb :set
+  end
 end
 
 not_found do

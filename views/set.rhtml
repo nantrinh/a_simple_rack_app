@@ -6,16 +6,6 @@
   </head>
   <body>
     <main>
-    <aside>
-      <nav class="main-nav">
-        <h1><a href="/">Sets</a></h1>
-        <ul>
-        <% @set_names.each_with_index do |name, index| %>
-          <li><a href="/0/<%= index %>"><%= name %></a></li>
-        <% end %>
-        </ul>
-      </nav>
-    </aside>
     <article class="main-set">
       <h1><%= @title %></h1>
       <a class="button" href="0/<%= @set_id %>/flashcards">Study (Flashcards)</a>
