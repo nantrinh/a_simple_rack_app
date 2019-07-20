@@ -24,11 +24,11 @@ article.card {
 nav.card-controls {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
 
   margin-top: 2rem;
 }
 
-nav.card-controls:hover {
+nav.card-controls a:hover {
   color: #cc0202;
 }
