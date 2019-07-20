@@ -10,12 +10,21 @@
     <link rel="stylesheet" href="/stylesheets/nav_sidebar.css" type="text/css">
     <link rel="stylesheet" href="/stylesheets/set.css" type="text/css">
     <link rel="stylesheet" href="/stylesheets/flashcards.css" type="text/css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <title><%= @title %></title>
   </head>
   <body>
     <header>
       <nav>
         <h1><a href="/">CodeCards</a></h1>
+        <div class="search-container">
+          <button type="submit"><i class="material-icons">search</i></button>
+          <form class="search-container" action="/search" method="get">
+            <label for="search">
+              <input type="text" name="query" placeholder="Search" autocomplete="off">
+            </label>
+          </form>
+        </div>
         <h2>User</h2>
       </nav>
     </header>

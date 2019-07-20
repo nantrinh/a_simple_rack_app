@@ -1,4 +1,7 @@
-/* Source: https://gist.github.com/ZachSaucier/8295d9dc926d7064ff0d4f3f04b35b55 */
+/* Sources:
+https://gist.github.com/ZachSaucier/8295d9dc926d7064ff0d4f3f04b35b55
+https://material.io/design/color/dark-theme.html
+*/
 
 @import 'https://fonts.googleapis.com/css?family=Open+Sans';
 
@@ -11,7 +14,7 @@ body {
 	font-family: 'Open Sans', sans-serif;
 	line-height: 1.75em;
 	font-size: 20px;
-	background-color: #222;
+	background-color: #121212;
 	color: #aaa;
 }
 

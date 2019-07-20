@@ -1,25 +1,53 @@
 body > header > nav {
-  background-color: #77090A;
+  background-color: #262626;
+  color: #b3b3b3;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 205px auto auto;
   grid-template-areas:
-    "logo username";
+    "logo search username";
   padding: 0 1rem;
 }
 
 body > header > nav > h1 {
   grid-area: logo;  
-/*  background-color: green;*/
   align-self: center;
   justify-self: start;
 }
 
 body > header > nav > h2 {
   grid-area: username;  
-/*  background-color: yellow;*/
   align-self: center;
   font-size: 1.2rem;
   justify-self: end;
+}
+
+.search-container {
+  grid-area: search;
+  align-self: center;
+  justify-self: start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-container input {
+  background-color: #121212;
+  color: #b3b3b3;
+  font-size: 1.1rem;
+  border: none;
+  outline: none;
+  padding-top: 6px;
+}
+
+.search-container button {
+  border: none;
+  background-color: inherit;
+  color: #b3b3b3;
+}
+
+::placeholder {
+  color: #aaa;
+  opacity: 1;
 }
 
 main {
