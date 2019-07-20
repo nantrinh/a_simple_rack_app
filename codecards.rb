@@ -75,6 +75,8 @@ get '/:user_id/:set_id/flashcards/:card_id/:side' do
 end
 
 not_found do
-  status 404
-  '~~~~404~~~~'
+  #status 404
+  erb :nav_sidebar do
+    erb :not_found
+  end
 end

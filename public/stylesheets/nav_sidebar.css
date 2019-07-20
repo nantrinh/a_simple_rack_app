@@ -1,7 +1,7 @@
 .nav-sidebar {
   grid-area: nav-sidebar;
   border: none;
-  padding: 4rem 2rem;
+  padding: 2.1rem 2rem;
 }
 
 .nav-sidebar h1 {
