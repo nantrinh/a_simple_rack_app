@@ -11,3 +11,8 @@
   padding: 1rem;
   white-space: pre-line;
 }
+
+mark {
+  background-color: #333333;
+  color: #f2f2f2;
+}

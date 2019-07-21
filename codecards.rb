@@ -9,6 +9,10 @@ helpers do
     cards = Cards.from_file("data/#{set_id}.txt")
     cards.size 
   end
+
+  def highlight_matches(string, query)
+    pass
+  end
 end
 
 before do
@@ -85,23 +89,27 @@ end
 def sets_matching(query)
   return [] if query.nil?
 
-  results = {}
+  matches = {}
   @set_names.each_with_index do |set_name, set_id|
-    results[set_name] = []
+    matches[set_name] = []
     cards = Cards.from_file("data/#{set_id}.txt")
     cards.each_with_index do |card|
-      break if results[set_name] == 5
+      break if matches[set_name] == 5
       if Regexp.new(/#{query}/i) =~ card.join
-        results[set_name].push(card)
+        matches[set_name].push(card)
       end
     end
   end
-  results.select {|k, v| v.size > 0}
+  matches.select {|k, v| v.size > 0}
 end
 
 get '/search' do
   @query = params[:query]
-  @results = sets_matching(@query)
+  @matches = sets_matching(@query)
+  # TODO
+  # highlight matches in terms (use mark tag)
+  # also search for sets and return set name if it's a match
+  # highlight set name also if it's a match
   erb :nav_sidebar do
     erb :search_result
   end
