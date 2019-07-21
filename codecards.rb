@@ -11,7 +11,15 @@ helpers do
   end
 
   def highlight_matches(string, query)
-    pass
+    matches = string.scan(/#{query}/i).uniq
+    matches.each do |match|
+      string = string.gsub(match, "<mark>#{match}</mark>")
+    end
+    string
+  end
+
+  def match_or_matches(number)
+    match_or_matches = number == 1 ? "match" : "matches"
   end
 end
 

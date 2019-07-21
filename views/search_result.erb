@@ -1,13 +1,14 @@
 <article class="main">
-  <h1><%= @matches.values.flatten.size %> matches for "<%= @query %>"</h1>
+  <% total_matches = @matches.values.flatten.size / 2 %>
+  <h1><%= "#{total_matches} #{match_or_matches(total_matches)}" %> for "<%= @query %>"</h1>
   <section class="search-results">
   <% @matches.each do |name, cards| %>
-    <h1><%= name %> (<%= cards.size %> matches)</h1>
+    <h1><%= "#{highlight_matches(name, @query)} (#{cards.size} #{match_or_matches(cards.size)})" %></h1>
     <table>
     <% cards.each do |term, definition| %>
       <tr>
-        <td><%= term %></td>
-        <td><%= definition %></td>
+        <td><%= highlight_matches(term, @query) %></td>
+        <td><%= highlight_matches(definition, @query) %></td>
       </tr>
     <% end %>
     </table>
