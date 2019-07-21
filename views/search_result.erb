@@ -1,0 +1,21 @@
+<article class="main">
+  <% if @results.empty? %>
+    <h1>No results found for "<% @query %>"</h1>
+  <% else %>
+    <h1>Search results for "<%= @query %>"</h1>
+      <section class="search-results">
+      <% @results.each do |name, cards| %>
+        <h1><%= name %> (<%= num_terms(name) %> terms)</h1>
+        <h2><%= cards.size %> matches</h2>
+        <table>
+        <% cards.each do |term, definition| %>
+          <tr>
+            <td><%= term %></td>
+            <td><%= definition %></td>
+          </tr>
+        <% end %>
+        </table>
+      <% end %>
+    </section>
+  <% end %>
+</article>

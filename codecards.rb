@@ -3,6 +3,14 @@ require 'sinatra/reloader'
 
 require_relative 'cards'
 
+helpers do
+  def num_terms(set_name)
+    set_id = @set_names.index(set_name)
+    cards = Cards.from_file("data/#{set_id}.txt")
+    cards.size 
+  end
+end
+
 before do
   @set_names = File.readlines('data/set_names.txt')
 end
@@ -74,8 +82,34 @@ get '/:user_id/:set_id/flashcards/:card_id/:side' do
   end
 end
 
+def sets_matching(query)
+  return [] if query.nil?
+
+  results = {}
+  @set_names.each_with_index do |set_name, set_id|
+    results[set_name] = []
+    cards = Cards.from_file("data/#{set_id}.txt")
+    cards.each_with_index do |card|
+      break if results[set_name] == 5
+      if Regexp.new(/#{query}/i) =~ card.join
+        results[set_name].push(card)
+      end
+    end
+  end
+  results.select {|k, v| v.size > 0}
+end
+
+get '/search' do
+  @query = params[:query]
+  @results = sets_matching(@query)
+  erb :nav_sidebar do
+    erb :search_result
+  end
+end
+
 not_found do
-  #status 404
+  @title = '404'
+  status 404
   erb :nav_sidebar do
     erb :not_found
   end

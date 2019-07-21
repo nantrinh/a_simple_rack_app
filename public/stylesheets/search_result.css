@@ -1,0 +1,13 @@
+.search-results h1 {
+  font-size: 1.5rem;
+}
+
+.search-results table {
+  border-collapse: collapse;
+}
+
+.search-results td {
+  border: 1px solid #aaa;
+  padding: 1rem;
+  white-space: pre-line;
+}
