@@ -1,6 +1,6 @@
 <article class="main">
   <section>
-    <h1><%= @matching_names.size %> set names matching"<%= @query %>"</h1> 
+    <h1><%= @matching_names.size %> set names matching "<%= @query %>"</h1> 
     <% @matching_names.each do |name| %>
       <a href="/0/<%= @set_names.index(name) %>"><%= "#{highlight_matches(name, @query)} (#{num_terms(name)} terms)" %></a>
     <% end %>

@@ -119,10 +119,6 @@ get '/search' do
   @query = params[:query]
   @matching_names = set_names_matching(@query)
   @matching_cards = cards_matching(@query)
-  # TODO
-  # highlight matches in terms (use mark tag)
-  # also search for sets and return set name if it's a match
-  # highlight set name also if it's a match
   erb :nav_sidebar do
     erb :search_result
   end
