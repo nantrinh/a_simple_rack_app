@@ -94,16 +94,15 @@ get '/:user_id/:set_id/flashcards/:card_id/:side' do
   end
 end
 
-def sets_matching(query)
+def cards_matching(query)
   return [] if query.nil?
 
   matches = {}
   @set_names.each_with_index do |set_name, set_id|
-    matches[set_name] = []
+    matches[set_name] = [] 
     cards = Cards.from_file("data/#{set_id}.txt")
     cards.each_with_index do |card|
-      break if matches[set_name] == 5
-      if Regexp.new(/#{query}/i) =~ card.join
+      if /#{query}/i =~ card.join
         matches[set_name].push(card)
       end
     end
@@ -111,9 +110,15 @@ def sets_matching(query)
   matches.select {|k, v| v.size > 0}
 end
 
+def set_names_matching(query)
+  return [] if query.nil?
+  @set_names.select {|name| /#{query}/i =~ name}
+end
+
 get '/search' do
   @query = params[:query]
-  @matches = sets_matching(@query)
+  @matching_names = set_names_matching(@query)
+  @matching_cards = cards_matching(@query)
   # TODO
   # highlight matches in terms (use mark tag)
   # also search for sets and return set name if it's a match

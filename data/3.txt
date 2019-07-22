@@ -1,0 +1,30 @@
+# What are indexes?
+---
+A mechanism that SQL engines use to speed up queries.
+
+# How do you implement indexes?
+---
+Indexes are automatically created when you define a PRIMARY KEY constraint or a UNIQUE constraint on a column. You can also use the CREATE INDEX command to create an index. `CREATE INDEX index_name ON table_name (field_name);` The index is the mechanism by which these constraints enforce uniqueness. 
+
+# What are the trade-offs involved in using indexes?
+---
+If you build an index of a field, reads become faster, but every time a row is updated or inserted, the index must be updated as well. You would be updating not only the table but also the index.
+Some useful rules of thumb:
+- Indexes are best used in cases where sequential reading is inadequate. For example: columns that aid in mapping relationships (such as Foreign Key columns), or columns that are frequently used as part of an ORDER BY clause, are good candidates for indexing.
+- They are best used in tables and/ or columns where the data will be read much more frequently than it is created or updated.
+
+# What is the default type of index used in PostgreSQL?
+---
+b-tree
+
+# What is the only type of index available for unique indexes?
+---
+b-tree
+
+# Do FOREIGN KEY constrains automatically create an index on a column?
+---
+No
+
+# The dominatrix says "hello".
+---
+but what dominates? freedom.

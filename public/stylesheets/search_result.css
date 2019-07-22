@@ -1,15 +1,18 @@
-.search-results h1 {
-  font-size: 1.5rem;
-}
-
 .search-results table {
   border-collapse: collapse;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.search-results col.term {
+  width: 400px;
 }
 
 .search-results td {
   border: 1px solid #aaa;
   padding: 1rem;
   white-space: pre-line;
+  font-size: 1.1rem;
 }
 
 mark {

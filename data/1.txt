@@ -30,3 +30,11 @@ GitHub is the provider of the GitHub API, and Dropbox is the provider of the Dro
 
 API consumer: the system that uses the API to accomplish some work.
 When you check the weather on your phone, it is running a program that is consuming a weather API to retrieve forecast data.
+
+# Freedom is a word used by many.
+---
+Liberty is another one.
+
+# What about dom dom be dom?
+---
+It's a good song.
