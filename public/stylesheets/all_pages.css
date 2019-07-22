@@ -52,7 +52,7 @@ body > header > nav > h2 {
 
 main {
   display: grid;
-  grid-template-columns: 205px auto;
+  grid-template-columns: 300px auto;
   grid-template-areas:
     "nav-sidebar main";
   grid-column-gap: 0.5rem;
@@ -62,4 +62,18 @@ article.main {
   grid-area: main;
   max-width: 1200px;
   padding: 2rem 0;
+}
+
+a:hover {
+  color: #BB86FC;
+}
+
+.button {
+  border: 2px solid #aaa;
+  border-radius: 8px;
+  padding: 0.7rem;
+}
+
+.button:hover {
+  border: 2px solid #BB86FC;
 }
