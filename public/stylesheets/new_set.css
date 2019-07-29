@@ -1,0 +1,35 @@
+.create-set input{
+  background-color: #262626;
+  color: #b3b3b3;
+  font-size: 1.4rem;
+  border: none;
+  outline: none;
+  padding: 10px 20rem 5px 5px;
+}
+
+.create-set ::placeholder {
+  color: #aaa;
+  opacity: 0.5;
+}
+
+.create-set label {
+  opacity: 0.7;
+}
+
+.create-set input, label, button {
+  display: block;
+}
+
+.create-set button {
+  font-family: inherit;
+  font-size: inherit; 
+  line-height: inherit;
+  background-color: inherit;
+  color: inherit;
+
+  border: 2px solid #aaa;
+  border-radius: 8px;
+  padding: 0.5rem 0.7rem 0.5rem 0.7rem;
+
+  margin: 2rem 0 2rem 0;
+}
