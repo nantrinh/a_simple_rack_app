@@ -55,6 +55,18 @@ get '/sets/new' do
   end
 end
 
+post '/sets' do
+  session[:temp_set] = {name: params[:set_name], cards:[]} 
+  redirect '/temp_set'
+end
+
+get '/temp_set' do
+  @title = session[:temp_set][:name]
+  erb :nav_sidebar do
+    erb :temp_set
+  end
+end
+
 get '/:user_id/:set_id' do
   @set_id = params['set_id'].to_i
   @user_id = params['user_id'].to_i

@@ -1,0 +1,17 @@
+<article class="main set">
+  <h1><%= @title %></h1>
+  <table class="set">
+  <% unless @cards.nil? %>
+    <% @cards.each do |term, definition| %>
+      <colgroup>
+        <col class="term">
+        <col class="definition">
+      </colgroup>
+      <tr>
+        <td><%= term %></td>
+        <td><%= definition %></td>
+      </tr>
+    <% end %>
+    </table>
+  <% end %>
+</article>
