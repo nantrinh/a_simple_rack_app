@@ -2,16 +2,10 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/stylesheets/dark-theme.css" type="text/css">
-
-    <link rel="stylesheet" href="/stylesheets/basics.css" type="text/css">
-    <link rel="stylesheet" href="/stylesheets/all_pages.css" type="text/css">
-
-    <link rel="stylesheet" href="/stylesheets/nav_sidebar.css" type="text/css">
-    <link rel="stylesheet" href="/stylesheets/set.css" type="text/css">
-    <link rel="stylesheet" href="/stylesheets/flashcards.css" type="text/css">
-    <link rel="stylesheet" href="/stylesheets/search_result.css" type="text/css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <% @stylesheets.each do |name| %>
+      <link rel="stylesheet" href="/stylesheets/<%= name %>.css" type="text/css">
+    <% end %>
     <title><%= @title %></title>
   </head>
   <body>

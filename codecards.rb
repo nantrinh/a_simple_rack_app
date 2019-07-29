@@ -3,6 +3,11 @@ require 'sinatra'
 
 require_relative 'cards'
 
+configure do
+  enable :sessions
+  set :session_secret, 'secret'
+end
+
 helpers do
   def num_terms(set_name)
     set_id = @set_names.index(set_name)
@@ -21,9 +26,16 @@ helpers do
   def match_or_matches(number)
     match_or_matches = number == 1 ? "match" : "matches"
   end
+
+  def stylesheet_file_names
+    Dir.glob('public/stylesheets/*.css').map do |filename|
+      filename.match(/stylesheets\/([^.]+)/).captures[0]
+    end
+  end
 end
 
 before do
+  @stylesheets =  stylesheet_file_names
   @set_names = File.readlines('data/set_names.txt')
 end
 
@@ -35,6 +47,12 @@ end
 get '/random_card' do
   @term, @definition = Cards.new.random_card
   erb :random_card
+end
+
+get '/sets/new' do
+  erb :nav_sidebar do
+    erb :new_set
+  end
 end
 
 get '/:user_id/:set_id' do
