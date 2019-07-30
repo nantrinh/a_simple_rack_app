@@ -1,5 +1,5 @@
 require 'sinatra'
-#require 'sinatra/reloader'
+require 'sinatra/reloader'
 
 require_relative 'cards'
 
@@ -41,12 +41,9 @@ end
 
 get '/' do
   @title = 'Sets' 
-  erb :home
-end
-
-get '/random_card' do
-  @term, @definition = Cards.new.random_card
-  erb :random_card
+  erb :nav_sidebar do
+    erb :home
+  end
 end
 
 get '/sets/new' do
