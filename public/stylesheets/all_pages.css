@@ -2,9 +2,9 @@ body > header > nav {
   background-color: #262626;
   color: #b3b3b3;
   display: grid;
-  grid-template-columns: 205px auto auto;
+  grid-template-columns: 205px 280px auto auto;
   grid-template-areas:
-    "logo search username";
+    "logo search create username";
   padding: 0 1rem;
 }
 
@@ -43,6 +43,12 @@ body > header > nav > h2 {
   border: none;
   background-color: inherit;
   color: #b3b3b3;
+}
+
+.create-container {
+  grid-area: create;
+  align-self: center;
+  justify-self: start;
 }
 
 ::placeholder {
