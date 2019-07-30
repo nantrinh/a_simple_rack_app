@@ -1,8 +1,26 @@
 <article class="main set">
   <h1>Create a new set</h1>
   <form action="/sets" method="post" class="create-set">
-    <input name="set_name" placeholder="Ruby Arrays" type="text" autocomplete="off">
+    <p>
     <label for="set_name">Title</label>
+    <input name="set_name" placeholder="Ruby Arrays" type="text" autocomplete="off">
+    </p>
+    <p>
+    <label for="copy_paste" class="large-text-box">Input your data here.</label>
+    <textarea class="large-text-box" placeholder=
+      "# Term 1
+      ---
+      Definition 1
+      
+      # Term 2
+      ---
+      Definition 2
+      
+      # Term 3
+      ---
+      Definition 3"
+      autocomplete="off" rows="25" columns="500"></textarea>
+    </p>
     <button class="button" type="submit">Create</button>
   </form>
 </article>

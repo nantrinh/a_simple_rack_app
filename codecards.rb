@@ -77,6 +77,7 @@ get '/search' do
 end
 
 get '/sets/new' do
+  @title = 'Create a new set'
   erb :nav_sidebar do
     erb :new_set
   end

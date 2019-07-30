@@ -33,3 +33,20 @@
 
   margin: 2rem 0 2rem 0;
 }
+
+.create-set p {
+  margin-bottom: 3rem;
+}
+
+textarea.large-text-box {
+  font-family: inherit;
+  background-color: #262626;
+  color: #b3b3b3;
+  font-size: 1.4rem;
+  border: none;
+  outline: none;
+  padding: 10px 20rem 5px 5px;
+  white-space: pre-line;
+  width: 75%;
+  height: 600px;
+}
