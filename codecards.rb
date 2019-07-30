@@ -32,6 +32,27 @@ helpers do
       filename.match(/stylesheets\/([^.]+)/).captures[0]
     end
   end
+
+  def cards_matching(query)
+    return [] if query.nil?
+  
+    matches = {}
+    @set_names.each_with_index do |set_name, set_id|
+      matches[set_name] = [] 
+      cards = Cards.from_file("data/#{set_id}.txt")
+      cards.each_with_index do |card|
+        if /#{query}/i =~ card.join
+          matches[set_name].push(card)
+        end
+      end
+    end
+    matches.select {|k, v| v.size > 0}
+  end
+  
+  def set_names_matching(query)
+    return [] if query.nil?
+    @set_names.select {|name| /#{query}/i =~ name}
+  end
 end
 
 before do
@@ -43,6 +64,15 @@ get '/' do
   @title = 'Sets' 
   erb :nav_sidebar do
     erb :home
+  end
+end
+
+get '/search' do
+  @query = params[:query]
+  @matching_names = set_names_matching(@query)
+  @matching_cards = cards_matching(@query)
+  erb :nav_sidebar do
+    erb :search_result
   end
 end
 
@@ -64,12 +94,13 @@ get '/temp_set' do
   end
 end
 
-get '/:user_id/:set_id' do
-  @set_id = params['set_id'].to_i
-  @user_id = params['user_id'].to_i
+get '/sets/public/:set_id' do
+  redirect not_found if (
+    /[^\d]/ =~ params['set_id'])
 
-  redirect not_found unless @user_id.zero? && \
-    (0...@set_names.size).cover?(@set_id)
+  @set_id = params['set_id'].to_i
+
+  redirect not_found unless (0...@set_names.size).cover?(@set_id)
 
   @cards = Cards.from_file("data/#{@set_id}.txt")
   @title = @set_names[@set_id] 
@@ -78,22 +109,30 @@ get '/:user_id/:set_id' do
   end
 end
 
-get '/:user_id/:set_id/flashcards' do |user_id, set_id|
-  redirect "/#{user_id}/#{set_id}/flashcards/0/term" 
+get '/sets/public/:set_id/flashcards' do
+  redirect not_found if (
+    /[^\d]/ =~ params['set_id'])
+  redirect "/sets/public/#{params['set_id']}/flashcards/0/term" 
 end
 
-get '/:user_id/:set_id/flashcards/:card_id/:side' do
+get '/sets/public/:set_id/flashcards/:card_id/:side' do
+  redirect not_found if (
+    /[^\d]/ =~ params['set_id'] || 
+    /[^\d]/ =~ params['card_id'] ||
+   !['term', 'definition'].include?(params[:side]))
+
   @set_id = params['set_id'].to_i
-  @user_id = params['user_id'].to_i
   @card_id = params['card_id'].to_i
   @side = params['side']
 
-  redirect not_found unless @user_id.zero? && \
-    (0...@set_names.size).cover?(@set_id) && \
-    ['term', 'definition'].include?(@side)
-
+  puts "well"
+  puts "#{(0...@set_names.size).to_a}"
+  redirect not_found unless (0...@set_names.size).cover?(@set_id)
+  puts "i got to here"
+    
   @cards = Cards.from_file("data/#{@set_id}.txt")
   redirect not_found unless (0...@cards.size).cover?(@card_id)
+  puts " i am now here"
 
   if @side == 'term'
     @display = @cards[@card_id][0] 
@@ -103,7 +142,8 @@ get '/:user_id/:set_id/flashcards/:card_id/:side' do
     other_side = "term"
   end
 
-  link_prefix = "/#{@user_id}/#{@set_id}/flashcards"
+  puts " third"
+  link_prefix = "/sets/public/#{@set_id}/flashcards"
 
   if @card_id > 0
     @previous_card_link = "#{link_prefix}/#{@card_id - 1}/term" 
@@ -118,36 +158,6 @@ get '/:user_id/:set_id/flashcards/:card_id/:side' do
   @title = @set_names[@set_id] 
   erb :nav_sidebar do
     erb :flashcards
-  end
-end
-
-def cards_matching(query)
-  return [] if query.nil?
-
-  matches = {}
-  @set_names.each_with_index do |set_name, set_id|
-    matches[set_name] = [] 
-    cards = Cards.from_file("data/#{set_id}.txt")
-    cards.each_with_index do |card|
-      if /#{query}/i =~ card.join
-        matches[set_name].push(card)
-      end
-    end
-  end
-  matches.select {|k, v| v.size > 0}
-end
-
-def set_names_matching(query)
-  return [] if query.nil?
-  @set_names.select {|name| /#{query}/i =~ name}
-end
-
-get '/search' do
-  @query = params[:query]
-  @matching_names = set_names_matching(@query)
-  @matching_cards = cards_matching(@query)
-  erb :nav_sidebar do
-    erb :search_result
   end
 end
 
