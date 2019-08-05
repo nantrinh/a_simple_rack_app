@@ -32,27 +32,27 @@ helpers do
       filename.match(/stylesheets\/([^.]+)/).captures[0]
     end
   end
+end
 
-  def cards_matching(query)
-    return [] if query.nil?
-  
-    matches = {}
-    @set_names.each_with_index do |set_name, set_id|
-      matches[set_name] = [] 
-      cards = Cards.from_file("data/#{set_id}.txt")
-      cards.each_with_index do |card|
-        if /#{query}/i =~ card.join
-          matches[set_name].push(card)
-        end
+def cards_matching(query)
+  return [] if query.nil?
+
+  matches = {}
+  @set_names.each_with_index do |set_name, set_id|
+    matches[set_name] = [] 
+    cards = Cards.from_file("data/#{set_id}.txt")
+    cards.each_with_index do |card|
+      if /#{query}/i =~ card.join
+        matches[set_name].push(card)
       end
     end
-    matches.select {|k, v| v.size > 0}
   end
-  
-  def set_names_matching(query)
-    return [] if query.nil?
-    @set_names.select {|name| /#{query}/i =~ name}
-  end
+  matches.select {|k, v| v.size > 0}
+end
+
+def set_names_matching(query)
+  return [] if query.nil?
+  @set_names.select {|name| /#{query}/i =~ name}
 end
 
 before do
@@ -126,14 +126,11 @@ get '/sets/public/:set_id/flashcards/:card_id/:side' do
   @card_id = params['card_id'].to_i
   @side = params['side']
 
-  puts "well"
   puts "#{(0...@set_names.size).to_a}"
   redirect not_found unless (0...@set_names.size).cover?(@set_id)
-  puts "i got to here"
     
   @cards = Cards.from_file("data/#{@set_id}.txt")
   redirect not_found unless (0...@cards.size).cover?(@card_id)
-  puts " i am now here"
 
   if @side == 'term'
     @display = @cards[@card_id][0] 
@@ -143,7 +140,6 @@ get '/sets/public/:set_id/flashcards/:card_id/:side' do
     other_side = "term"
   end
 
-  puts " third"
   link_prefix = "/sets/public/#{@set_id}/flashcards"
 
   if @card_id > 0
