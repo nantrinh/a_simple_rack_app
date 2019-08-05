@@ -49,6 +49,7 @@ body > header > nav > h2 {
   grid-area: create;
   align-self: center;
   justify-self: start;
+  font-size: 1.2rem;
 }
 
 ::placeholder {
@@ -82,4 +83,8 @@ a:hover {
 
 .button:hover {
   border: 2px solid #BB86FC;
+}
+
+td, p, textarea {
+  white-space: pre-line;
 }

@@ -46,7 +46,6 @@ textarea.large-text-box {
   border: none;
   outline: none;
   padding: 10px 20rem 5px 5px;
-  white-space: pre-line;
   width: 75%;
   height: 600px;
 }
