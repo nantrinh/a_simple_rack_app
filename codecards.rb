@@ -84,12 +84,14 @@ get '/sets/new' do
 end
 
 post '/sets' do
-  session[:temp_set] = {name: params[:set_name], cards:[]} 
+  session[:temp_set] = {name: params[:set_name],
+                        cards: Cards.parse_text(params[:cards_text_box])} 
   redirect '/temp_set'
 end
 
 get '/temp_set' do
   @title = session[:temp_set][:name]
+  @cards= session[:temp_set][:cards] 
   erb :nav_sidebar do
     erb :temp_set
   end

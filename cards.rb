@@ -5,10 +5,14 @@ class Cards
   attr_reader :cards
 
   def self.from_file(path_to_file)
-    data = File.read(path_to_file)
-    data = sanitize(data)
-    data = (data)
-    cards = data.split("\n\n# ").map{|card| card.split("\n---\n")}
+    text = File.read(path_to_file)
+    parse_text(text)
+  end
+
+  def self.parse_text(text)
+    text = sanitize(text)
+    text.gsub!("\r", '')
+    cards = text.split("\n\n# ").map{|card| card.split("\n---\n")}
     cards.each do |card|
       card.each do |term, definition|
         term.sub!(/^# /, '')
