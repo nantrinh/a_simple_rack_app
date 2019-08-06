@@ -1,6 +1,6 @@
 1. Install the [Heroku Command Line Interface](https://toolbelt.heroku.com/). Login using `heroku login`.
 2. Deploying to Heroku requires that a project is stored in a Git repository. Create a Git repository and commit all the project's files to it. 
-3. Comment out `require 'sinatra/reloader'` or replace with `require 'sinatra/reloader' if development`.
+3. Comment out `require 'sinatra/reloader'` or replace with `require 'sinatra/reloader' if development`. Comment out `require pry` everywhere that you have it.
 4. Specify a Ruby version in Gemfile so that Heroku knows the exact version of Ruby to use when serving the project: `ruby '2.5.3'`. Run `bundle install`
 5. Configure your application to use a production web server.
   - Add this to the Gemfile:

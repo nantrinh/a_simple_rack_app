@@ -1,5 +1,4 @@
 require_relative 'text_formatters'
-require 'pry'
 
 class Cards
   attr_reader :cards
