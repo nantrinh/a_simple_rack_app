@@ -1,0 +1,14 @@
+<article class="main set">
+  <form action="/sets/temp_set/edit" method="post" class="create-set">
+    <p>
+    <label for="set_name">Title</label>
+    <input name="set_name" value=<%= @title %> type="text" autocomplete="off">
+    </p>
+    <p>
+    <label for="cards_text_box" class="large-text-box">Input your data here.</label>
+    <textarea name="cards_text_box" class="large-text-box" autocomplete="off" rows="25" columns="500"><%= @cards %></textarea>
+    </p>
+    <a class="button" href="/sets/temp_set/edit/save">Save</a>
+    <button class="button" type="submit">Save and Exit</button>
+  </form>
+</article>

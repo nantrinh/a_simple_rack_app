@@ -1,7 +1,9 @@
 require 'sinatra'
-# require 'sinatra/reloader'
+require 'sinatra/reloader'
+require 'pry'
 
 require_relative 'cards'
+require_relative 'text_formatters'
 
 configure do
   enable :sessions
@@ -91,11 +93,23 @@ end
 
 get '/temp_set' do
   @title = session[:temp_set][:name]
-  @cards= session[:temp_set][:cards] 
+  @cards = session[:temp_set][:cards] 
   erb :nav_sidebar do
     erb :temp_set
   end
 end
+
+get '/sets/temp_set/edit' do
+  @title = session[:temp_set][:name]
+  @cards = cards_array_to_str(session[:temp_set][:cards])
+  erb :nav_sidebar do
+    erb :edit_set
+  end
+end
+
+post '/sets/temp_set/edit' do
+  redirect '/temp_set'
+end 
 
 get '/sets/public/:set_id' do
   redirect not_found if (

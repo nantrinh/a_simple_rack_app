@@ -1,5 +1,6 @@
 <article class="main set">
   <h1><%= @title.empty? ? 'Untitled Set' : @title %></h1>
+  <a href="/sets/temp_set/edit"><i class="material-icons">create</i>Edit Set</a>
   <table class="set">
   <% unless @cards.nil? %>
     <% @cards.each do |term, definition| %>
