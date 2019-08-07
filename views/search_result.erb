@@ -17,8 +17,8 @@
         </colgroup>
         <% cards.each do |term, definition| %>
           <tr>
-            <td><%= highlight_matches(term, @query) %></td>
-            <td><%= highlight_matches(definition, @query) %></td>
+            <td><%== highlight_matches(term, @query) %></td>
+            <td><%== highlight_matches(definition, @query) %></td>
           </tr>
         <% end %>
       </table>

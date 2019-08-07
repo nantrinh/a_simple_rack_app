@@ -6,7 +6,7 @@
     <% @stylesheets.each do |name| %>
       <link rel="stylesheet" href="/stylesheets/<%= name %>.css" type="text/css">
     <% end %>
-    <title><%= @title %></title>
+    <title><%== @title %></title>
   </head>
   <body>
     <header>
@@ -16,7 +16,7 @@
           <button type="submit"><i class="material-icons">search</i></button>
           <form class="search-container" action="/search" method="get">
             <label for="search">
-              <input type="text" name="query" placeholder="Search" autocomplete="off" value=<%= @query %>>
+              <input type="text" name="query" placeholder="Search" autocomplete="off" value=<%== @query %>>
             </label>
           </form>
         </div>
@@ -27,7 +27,7 @@
       </nav>
     </header>
     <main>
-      <%= yield %>
+      <%== yield %>
     </main>
   </body>
 </html>
