@@ -107,10 +107,6 @@ get '/sets/temp_set/edit' do
   end
 end
 
-post '/sets/temp_set/edit' do
-  redirect '/temp_set'
-end 
-
 get '/sets/public/:set_id' do
   redirect not_found if (
     /[^\d]/ =~ params['set_id'])
