@@ -16,7 +16,7 @@ set_titles = File.readlines('data/set_titles.txt')
 set_titles.map! {|x| x.chomp}
 
 set_titles.each do |title|
-  db.add_set(title, user_id)
+  db.create_set(title, user_id)
 end
 
 set_titles.each_with_index do |title, index|
@@ -24,7 +24,7 @@ set_titles.each_with_index do |title, index|
   str = File.read("data/#{index}.txt") 
   cards = Cards.str_to_array(str)
   cards.each do |term, definition|
-    db.add_card(term, definition, set_id)
+    db.create_card(term, definition, set_id)
   end
 end
 

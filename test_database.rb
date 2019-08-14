@@ -2,10 +2,7 @@ require 'pg'
 require_relative 'database_persistence'
 require 'pry'
 
-connection = PG.connect(dbname: 'codecards')
-db = DatabasePersistence.new
-
-def basic_test
+def basic_test(db)
   # Test creation and retrieval of user ids
   user_id = db.user_id('public')
   p user_id == '1'
@@ -18,16 +15,16 @@ def basic_test
   }
   
   data.each do |username, set_titles|
-  #  db.add_user(username)
+  #  db.create_user(username)
     user_id = db.user_id(username)
     set_titles.each do |title|
-      # db.add_set(title, user_id)
+      # db.create_set(title, user_id)
       puts "set id of #{title} is #{db.set_id(title, user_id)}"
     end
   end
 end
 
-def test_retrieval_of_cards
+def test_retrieval_of_cards(db)
   username = 'public' 
   title = 'Core Ruby Tools' 
   user_id = db.user_id(username)
@@ -37,4 +34,5 @@ def test_retrieval_of_cards
   puts ""
 end
 
-test_retrieval_of_cards
+db = DatabasePersistence.new
+test_retrieval_of_cards(db)
