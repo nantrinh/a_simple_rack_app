@@ -1,11 +1,17 @@
-create table sets (
-  id serial primary key,
-  title varchar(255) not null
-);
+drop table users;
+drop table sets;
+drop table cards;
 
 create table users (
   id serial primary key,
-  name varchar(50) not null
+  name varchar(50) unique not null
+);
+
+create table sets (
+  id serial primary key,
+  title varchar(255) not null,
+  user_id integer not null references users(id),
+  unique(title, user_id)
 );
 
 create table cards (
@@ -15,8 +21,4 @@ create table cards (
   definition text
 );
 
-create table sets_users (
-  id serial primary key,
-  user_id integer not null references users(id),
-  sets_id integer not null references sets(id)
-);
+insert into users (name) values ('public');
