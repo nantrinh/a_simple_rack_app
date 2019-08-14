@@ -1,5 +1,6 @@
 require 'pg'
 require_relative 'database_persistence'
+require_relative 'text_formatters'
 require 'pry'
 
 def basic_test(db)
@@ -18,7 +19,7 @@ def basic_test(db)
   #  db.create_user(username)
     user_id = db.user_id(username)
     set_titles.each do |title|
-      # db.create_set(title, user_id)
+      # db.create_set(urlize(title), user_id)
       puts "set id of #{title} is #{db.set_id(title, user_id)}"
     end
   end
@@ -28,7 +29,7 @@ def test_retrieval_of_cards(db)
   username = 'public' 
   title = 'Core Ruby Tools' 
   user_id = db.user_id(username)
-  set_id = db.set_id(title, user_id) 
+  set_id = db.set_id(url_title, user_id) 
   cards = db.cards(set_id)
   binding.pry
   puts ""

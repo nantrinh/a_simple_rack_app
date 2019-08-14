@@ -8,8 +8,8 @@
     </ul>
     <h1><a href="/">Public Sets</a></h1>
     <ul>
-    <% @set_names.each_with_index do |name, index| %>
-      <li><a href="/sets/public/<%= index %>"><%= name %></a></li>
+    <% @set_titles.each do |display_title, url_title| %>
+      <li><a href="/sets/public/<%= url_title %>"><%= display_title %></a></li>
     <% end %>
     </ul>
   </nav>

@@ -7,9 +7,9 @@ class DatabasePersistence
   end
 
   # CREATE (INSERT)
-  def create_set(title, user_id)
-    sql = 'INSERT INTO sets (title, user_id) VALUES ($1, $2);'
-    @connection.exec_params(sql, [title, user_id])
+  def create_set(display_title, url_title, user_id)
+    sql = 'INSERT INTO sets (display_title, url_title, user_id) VALUES ($1, $2, $3);'
+    @connection.exec_params(sql, [display_title, url_title, user_id])
   end
   
   def create_user(name)
@@ -29,15 +29,27 @@ class DatabasePersistence
     result[0]['id'] unless result.ntuples.zero?
   end
 
-  def set_id(title, user_id)
-    sql = 'SELECT id FROM sets WHERE title = $1 AND user_id = $2;'
-    result = @connection.exec_params(sql, [title, user_id])
+  def set_id(url_title, user_id)
+    sql = 'SELECT id FROM sets WHERE url_title = $1 AND user_id = $2;'
+    result = @connection.exec_params(sql, [url_title, user_id])
     result[0]['id'] unless result.ntuples.zero?
   end
-  
+
   def cards(set_id)
     sql = 'SELECT term, definition FROM cards WHERE set_id = $1'
     result = @connection.exec_params(sql, [set_id])
+    result.values
+  end
+
+  def display_title(set_id, user_id)
+    sql = 'SELECT display_title FROM sets WHERE id = $1 AND user_id = $2;'
+    result = @connection.exec_params(sql, [set_id, user_id])
+    result[0]['display_title'] unless result.ntuples.zero?
+  end
+
+  def set_titles
+    sql = 'SELECT display_title, url_title from sets;' 
+    result = @connection.exec(sql)
     result.values
   end
 
