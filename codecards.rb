@@ -193,6 +193,6 @@ not_found do
   end
 end
 
-after do
-  @storage.disconnect
-end
+# after do
+#   @storage.disconnect
+# end

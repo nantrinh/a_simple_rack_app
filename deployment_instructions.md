@@ -45,7 +45,10 @@ This code uses the DATABSE_URL environment variable to determine the database na
 2. Enable postgresql, free tier ("hobby-dev" plan). 
 `heroku addons:create heroku-postgresql:hobby-dev`
 3. Set up schema.
-`heroku pg:psql < schema.sql`
+`heroku pg:psql < schema.sql` if you have a setup script.
+If you had inserted data in it using a script and want the production db to contain the same data, you can use pg_dump to generate a text file with SQL commands that, when fed back to the server, will recreate the database in the same state as it was at the time of the dump.
+`pg_dump dbname > outfile` (e.g., `pg_dump codecards > db_setup.sql`)
+Then run `heroku pg:psql < db_setup.sql`
 4. The free hobby-dev plan only allows for max 20 open database connections at once. If we exceed this limit, then our application will throw an error. Add the following code into your application to ensure that you don't exceed that 20 connection limit. 
 Add to `codecards.rb`:
 ```
