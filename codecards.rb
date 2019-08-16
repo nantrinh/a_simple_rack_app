@@ -111,23 +111,32 @@ end
 #   end
 # end
 
-get '/sets/:username/:title' do |username, title|
+get '/sets/:username/:url_title' do |username, url_title|
   user_id = @storage.user_id(username)
-  set_id = @storage.set_id(title, user_id)  
+  set_id = @storage.set_id(url_title, user_id)
 
-  redirect not_found if user_id.nil? || set_id.nil? 
+  redirect not_found if user_id.nil? || set_id.nil?
 
-  @title = @storage.display_title(set_id, user_id) 
+  @display_title = @storage.display_title(set_id, user_id)
   @cards = @storage.cards(set_id)
+  @username = username
+  @url_title = url_title
   erb :nav_sidebar do
     erb :set
   end
 end
 
-# get '/sets/public/:set_id/flashcards' do
-#   redirect not_found if (
-#     /[^\d]/ =~ params['set_id'])
-#   redirect "/sets/public/#{params['set_id']}/flashcards/0/term" 
+# get '/sets/:username/:url_title/flashcards/:card_id/:side' do |username, url_title|
+#   # READ ALL CARDS IN THEN SHOW ONE BY ONE USING JAVASCRIPT?
+#   user_id = @storage.user_id(username)
+#   set_id = @storage.set_id(url_title, user_id)
+# 
+#   redirect not_found if user_id.nil? || set_id.nil? 
+# 
+#   @display_title = @storage.display_title(set_id, user_id) 
+#   @cards = @storage.cards(set_id)
+#   @username = username
+#   @url_title = url_title
 # end
 # 
 # get '/sets/public/:set_id/flashcards/:card_id/:side' do

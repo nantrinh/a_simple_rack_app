@@ -1,6 +1,6 @@
 <article class="main set">
-  <h1><%= @title %></h1>
-  <a class="button" href="/sets/public/<%= @set_id %>/flashcards">Study (Flashcards)</a>
+  <h1><%= @display_title %></h1>
+  <a class="button" href="/sets/<%= @username %>/<%= @url_title %>/flashcards">Study (Flashcards)</a>
   <table class="set">
   <% @cards.each do |term, definition| %>
     <colgroup>
