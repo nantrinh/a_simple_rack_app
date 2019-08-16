@@ -1,9 +1,13 @@
-require 'pry'
+# require 'pry'
 require 'pg'
 
 class DatabasePersistence
   def initialize
-    @connection = PG.connect(dbname: 'codecards')
+    if Sinatra::Base.production?
+      @connection = PG.connect(ENV['DATABASE_URL'])
+    else
+      @connection = PG.connect(dbname: 'codecards')
+    end
   end
 
   # CREATE (INSERT)
@@ -61,4 +65,7 @@ class DatabasePersistence
     result = @connection.exec_params(sql, [card_id])
   end
 
+  def disconnect
+    @connection.close
+  end
 end

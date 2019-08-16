@@ -31,3 +31,31 @@
 4. Run `heroku local` and navigate to `http://localhost:5000/` to test locally.
 5. Run `git push heroku master` to push the project to the Heroku application.
 6. Visit the app to check that everything is working.
+
+# Adding a postgresql database
+1. In the `DatabasePersistence` class, use the following:
+```
+@connection = if Sinatra::Base.production?
+        PG.connect(ENV['DATABASE_URL'])  
+      else
+        PG.connect(dbname: "todos") # name of your database
+      end
+```
+This code uses the DATABSE_URL environment variable to determine the database name when running on heroku.
+2. Enable postgresql, free tier ("hobby-dev" plan). 
+`heroku addons:create heroku-postgresql:hobby-dev`
+3. Set up schema.
+`heroku pg:psql < schema.sql`
+4. The free hobby-dev plan only allows for max 20 open database connections at once. If we exceed this limit, then our application will throw an error. Add the following code into your application to ensure that you don't exceed that 20 connection limit. 
+Add to `codecards.rb`:
+```
+after do
+  @storage.disconnect
+end
+```
+Add to `database_persistence.rb`:
+```
+def disconnect
+  @db.close
+end
+```

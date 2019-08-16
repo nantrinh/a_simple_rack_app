@@ -1,6 +1,4 @@
 require 'sinatra'
-#require 'sinatra/reloader'
-#require 'pry'
 
 require_relative 'database_persistence'
 require_relative 'text_formatters'
@@ -9,6 +7,12 @@ configure do
   enable :sessions
   set :session_secret, 'secret'
   set :erb, :escape_html => true
+end
+
+configure(:development) do
+  # require 'pry'
+  # require 'sinatra/reloader'
+  # also_reload 'database_persistence.rb'
 end
 
 helpers do
@@ -187,4 +191,8 @@ not_found do
   erb :nav_sidebar do
     erb :not_found
   end
+end
+
+after do
+  @storage.disconnect
 end
