@@ -9,11 +9,11 @@ configure do
   set :erb, :escape_html => true
 end
 
-configure(:development) do
+# configure(:development) do
   # require 'pry'
   # require 'sinatra/reloader'
   # also_reload 'database_persistence.rb'
-end
+# end
 
 helpers do
 #   def num_terms(set_name)
