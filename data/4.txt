@@ -1,15 +1,3 @@
-# This is a test.
-```
-class TestMe
-  def test
-    <script>alert('Hello');</script>
-    <a href="http://www.unicode.org/charts/PDF/U0000.pdf">CLICK ME</a>
-  end
-end
-```
----
-Flip side of card
-
 # What does the following code output?
 ```
 class Person

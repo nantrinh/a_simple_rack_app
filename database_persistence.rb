@@ -1,5 +1,6 @@
 # require 'pry'
 require 'pg'
+require 'sinatra'
 
 class DatabasePersistence
   def initialize
