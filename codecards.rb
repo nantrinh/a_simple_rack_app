@@ -9,11 +9,11 @@ configure do
   set :erb, :escape_html => true
 end
 
-# configure(:development) do
-  # require 'pry'
-  # require 'sinatra/reloader'
-  # also_reload 'database_persistence.rb'
-# end
+configure(:development) do
+  require 'pry'
+  require 'sinatra/reloader'
+  also_reload 'database_persistence.rb'
+end
 
 helpers do
 #   def num_terms(set_name)
@@ -67,7 +67,6 @@ before do
   @stylesheets =  stylesheet_file_names
   @storage = DatabasePersistence.new
   @set_titles = @storage.set_titles
-  p @set_titles
 end
 
 get '/' do
@@ -130,19 +129,26 @@ get '/sets/:username/:url_title' do |username, url_title|
   end
 end
 
-# get '/sets/:username/:url_title/flashcards/:card_id/:side' do |username, url_title|
-#   # READ ALL CARDS IN THEN SHOW ONE BY ONE USING JAVASCRIPT?
-#   user_id = @storage.user_id(username)
-#   set_id = @storage.set_id(url_title, user_id)
-# 
-#   redirect not_found if user_id.nil? || set_id.nil? 
-# 
-#   @display_title = @storage.display_title(set_id, user_id) 
-#   @cards = @storage.cards(set_id)
-#   @username = username
-#   @url_title = url_title
-# end
-# 
+get '/sets/:username/:url_title/flashcards/:relative_id' do
+  user_id = @storage.user_id(params[:username])
+  set_id = @storage.set_id(params[:url_title], user_id)
+  p user_id, set_id
+
+  redirect not_found if user_id.nil? || set_id.nil?
+  p user_id, set_id
+
+  card = @storage.card(params[:relative_id], set_id)
+  p card
+
+  redirect not_found if card.empty?
+  @term, @definition = card 
+
+  @content = card[0]
+  erb :nav_sidebar do
+    erb :flashcards
+  end
+end
+
 # get '/sets/public/:set_id/flashcards/:card_id/:side' do
 #   redirect not_found if (
 #     /[^\d]/ =~ params['set_id'] || 

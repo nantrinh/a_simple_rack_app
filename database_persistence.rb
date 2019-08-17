@@ -46,6 +46,20 @@ class DatabasePersistence
     result.values
   end
 
+  def card(offset, set_id)
+    sql = <<~SQL
+      SELECT term, 
+             definition 
+      FROM   cards 
+      WHERE  set_id = $2 
+      ORDER  BY id 
+      LIMIT  1
+      OFFSET $1
+    SQL
+    result = @connection.exec_params(sql, [offset, set_id])
+    result.values[0]
+  end
+
   def display_title(set_id, user_id)
     sql = 'SELECT display_title FROM sets WHERE id = $1 AND user_id = $2;'
     result = @connection.exec_params(sql, [set_id, user_id])
