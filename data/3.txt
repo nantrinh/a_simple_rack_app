@@ -21,10 +21,6 @@ b-tree
 ---
 b-tree
 
-# Do FOREIGN KEY constrains automatically create an index on a column?
+# Do FOREIGN KEY constraints automatically create an index on a column?
 ---
 No
-
-# The dominatrix says "hello".
----
-but what dominates? freedom.

@@ -19,7 +19,3 @@ No, but they are in the DOM, so do not neglect them.
 # True or False: there is a direct one-to-one mapping between the tags that appear in an HTML file and the nodes in the DOM.
 ---
 False. The browser may insert nodes that don't appear in the HTML due to invalid markup or the omission of optional tags. Text, including whitespace, also creates nodes that don't map to tags.
-
-# Does this JavaScript run?
----
-alert('Hello world!');
