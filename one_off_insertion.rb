@@ -30,7 +30,3 @@ url_titles.each_with_index do |url_title, index|
     db.create_card(term, definition, set_id)
   end
 end
-
-# HELPFUL STATEMENTS FOR DEBUGGING
-# sql = 'select id, set_id, substring(term, 1, 20) as term, substring(definition, 1, 20) as def from cards limit 10;' 
-# sql = 'select id, set_id, substring(term, length(term)-20) as term, substring(definition, length(definition) - 20) as def from cards limit 10;'
