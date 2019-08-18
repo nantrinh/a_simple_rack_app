@@ -36,27 +36,6 @@ helpers do
 
 end
 
-# def cards_matching(query)
-#   return [] if query.nil?
-# 
-#   matches = {}
-#   @set_titles.each_with_index do |set_name, set_id|
-#     matches[set_name] = [] 
-#     cards = Cards.from_file("data/#{set_id}.txt")
-#     cards.each_with_index do |card|
-#       if /#{query}/i =~ card.join
-#         matches[set_name].push(card)
-#       end
-#     end
-#   end
-#   matches.select {|k, v| v.size > 0}
-# end
-
-# def set_titles_matching(query)
-#   return [] if query.nil?
-#   @set_titles.select {|name| /#{query}/i =~ name}
-# end
-
 before do
   @stylesheets =  stylesheet_file_names
   @storage = DatabasePersistence.new
@@ -73,7 +52,7 @@ end
 get '/search' do
   @query = params[:query]
   @matching_titles = @storage.set_titles_matching(@query) || []
-#  @matching_cards = cards_matching(@query)
+  @matching_cards, @card_count  = @storage.cards_matching(@query) || []
   erb :nav_sidebar do
     erb :search_result
   end

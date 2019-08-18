@@ -5,4 +5,26 @@
       <p><a href=<%= "/sets/#{username}/#{url_title}" %>><%== "#{highlight_matches(display_title, @query)} (#{num_terms} #{plural?("term", num_terms)})" %></a></p>
     <% end %>
   </section>
+  <section>
+    <h1><%= "#{@card_count} #{plural?("card", @card_count)} matching \"#{@query}\"" %></h1> 
+    <section class="search-results">
+    <% @matching_cards.keys.each do |set_id| %>
+      <% data = @matching_cards[set_id] %>
+      <a href=<%= "/sets/#{data['username']}/#{data['url_title']}" %>><%= data['display_title'] %></a>:
+      <table>
+        <colgroup>
+          <col class="term">
+          <col class="definition">
+        </colgroup>
+        <% data['cards'].each do |card| %>
+          <% term, definition = card %>
+          <tr>
+            <td><%== highlight_matches(term, @query) %></td>
+            <td><%== highlight_matches(definition, @query) %></td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
+    </section>
+  </section>
 </article>

@@ -46,20 +46,6 @@ class DatabasePersistence
     result.values
   end
 
-  def card(offset, set_id)
-    sql = <<~SQL
-      SELECT term, 
-             definition 
-      FROM   cards 
-      WHERE  set_id = $2 
-      ORDER  BY id 
-      LIMIT  1
-      OFFSET $1
-    SQL
-    result = @connection.exec_params(sql, [offset, set_id])
-    result.values[0]
-  end
-
   def display_title(set_id, user_id)
     sql = 'SELECT display_title FROM sets WHERE id = $1 AND user_id = $2;'
     result = @connection.exec_params(sql, [set_id, user_id])
@@ -89,6 +75,41 @@ class DatabasePersistence
     SQL
     result = @connection.exec(sql)
     result.values unless result.nil?
+  end
+
+  def cards_matching(query)
+    escaped_query = PG::Connection.escape_string(query)
+    sql = <<~SQL
+      SELECT     c.set_id,
+                 c.term,
+                 c.definition,
+                 s.display_title,
+                 s.url_title,
+                 u.name
+      FROM       cards as c
+      INNER JOIN sets as s
+      ON         c.set_id = s.id 
+      INNER JOIN users as u
+      ON         s.user_id = u.id
+      WHERE      term ilike '%#{escaped_query}%'
+      OR         definition ilike '%#{escaped_query}%';
+    SQL
+    result = @connection.exec(sql)
+    return if result.nil?
+
+    hash = {}
+    result.values.each do |card|
+      if hash[card[0]].nil?
+        hash[card[0]] = {}
+        hash[card[0]]['cards'] = [card[1..2]]
+        hash[card[0]]['display_title'] = card[3] 
+        hash[card[0]]['url_title'] = card[4] 
+      else
+        hash[card[0]]['cards'].push(card[1..2])
+      end
+    end
+
+    [hash, result.values.size]
   end
 
   # UPDATE
