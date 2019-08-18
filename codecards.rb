@@ -129,7 +129,7 @@ get '/sets/:username/:url_title' do |username, url_title|
   end
 end
 
-get '/sets/:username/:url_title/flashcards/:relative_id' do
+get '/sets/:username/:url_title/flashcards' do
   user_id = @storage.user_id(params[:username])
   set_id = @storage.set_id(params[:url_title], user_id)
   p user_id, set_id
@@ -137,11 +137,10 @@ get '/sets/:username/:url_title/flashcards/:relative_id' do
   redirect not_found if user_id.nil? || set_id.nil?
   p user_id, set_id
 
-  card = @storage.card(params[:relative_id], set_id)
-  p card
+  #card = @storage.card(params[:relative_id], set_id)
+  @cards = @storage.cards(set_id)
 
-  redirect not_found if card.empty?
-  @term, @definition = card 
+  redirect not_found if @cards.empty?
 
   erb :nav_sidebar do
     erb :flashcards
