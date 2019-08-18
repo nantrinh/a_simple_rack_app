@@ -1,22 +1,16 @@
 <script src="/javascripts/flashcards.js"></script>
 <div class="main">
-  <article class="card" id="content">
+  <article class="card-container" id="content">
     <% @cards.each do |term, definition| %>
-      <p class="term hide"><%= term %></p>
-      <p class="definition hide"><%= definition %></p>
+      <div class="card-content">
+        <p class="term hide"><%= term %></p>
+        <p class="definition hide"><%= definition %></p>
+      </div>
     <% end %>
   </article>
   <nav class="card-controls">
-    <% if @previous_card_link %>
-      <a href="<%= @previous_card_link %>">PREVIOUS</a>
-    <% else %>
-      <a></a>
-    <% end %>
+    <a href="#" id="prev" class="invisible">PREVIOUS</a>
     <a href="#" id="flip">FLIP</a>
-    <% if @next_card_link %>
-      <a href="<%= @next_card_link %>">NEXT</a>
-    <% else %>
-      <a></a>
-    <% end %>
+    <a href="#" id="next">NEXT</a>
   </nav>
 </div>

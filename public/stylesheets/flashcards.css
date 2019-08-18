@@ -4,7 +4,7 @@ div.main {
   justify-self: center;
 }
 
-article.card {
+article.card-container {
   margin-top: 5rem;
   width: 800px;
   height: 500px; 
@@ -15,15 +15,27 @@ article.card {
   justify-content: center;
 }
 
-.card p {
+.card-container p {
   font-size: 2rem;
   padding: 5rem;
 }
 
 nav.card-controls {
-  display: flex;
+  display: grid;
+  grid-template-areas: "prev flip next";
   align-items: center;
   justify-content: space-around;
-
   margin-top: 2rem;
+}
+
+#prev {
+  grid-area: prev;
+}
+
+#flip {
+  grid-area: flip;
+}
+
+#next {
+  grid-area: next;
 }

@@ -6,3 +6,7 @@ a {
 .hide {
   display: none;
 }
+
+.invisible {
+  visibility: hidden;
+}
