@@ -137,7 +137,6 @@ get '/sets/:username/:url_title/flashcards' do
   redirect not_found if user_id.nil? || set_id.nil?
   p user_id, set_id
 
-  #card = @storage.card(params[:relative_id], set_id)
   @cards = @storage.cards(set_id)
 
   redirect not_found if @cards.empty?
@@ -146,48 +145,6 @@ get '/sets/:username/:url_title/flashcards' do
     erb :flashcards
   end
 end
-
-# get '/sets/public/:set_id/flashcards/:card_id/:side' do
-#   redirect not_found if (
-#     /[^\d]/ =~ params['set_id'] || 
-#     /[^\d]/ =~ params['card_id'] ||
-#    !['term', 'definition'].include?(params[:side]))
-# 
-#   @set_id = params['set_id'].to_i
-#   @card_id = params['card_id'].to_i
-#   @side = params['side']
-# 
-#   #puts "#{(0...@set_titles.size).to_a}"
-#   redirect not_found unless (0...@set_titles.size).cover?(@set_id)
-#     
-#   @cards = Cards.from_file("data/#{@set_id}.txt")
-#   redirect not_found unless (0...@cards.size).cover?(@card_id)
-# 
-#   if @side == 'term'
-#     @display = @cards[@card_id][0] 
-#     other_side = "definition"
-#   else
-#     @display = @cards[@card_id][1]
-#     other_side = "term"
-#   end
-# 
-#   link_prefix = "/sets/public/#{@set_id}/flashcards"
-# 
-#   if @card_id > 0
-#     @previous_card_link = "#{link_prefix}/#{@card_id - 1}/term" 
-#   end
-# 
-#   if @card_id < @cards.size - 2
-#     @next_card_link = "#{link_prefix}/#{@card_id + 1}/term" 
-#   end
-# 
-#   @flip_link = "#{link_prefix}/#{@card_id}/#{other_side}" 
-# 
-#   @title = @set_titles[@set_id] 
-#   erb :nav_sidebar do
-#     erb :flashcards
-#   end
-# end
 
 not_found do
   @title = '404'
