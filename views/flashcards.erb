@@ -1,6 +1,8 @@
+<script src="/javascripts/flashcards.js"></script>
 <div class="main">
   <article class="card">
-    <p><%= @content %></p>
+    <p id="term"><%= @term%></p>
+    <p id="definition" class="hide"><%= @definition %></p>
   </article>
   <nav class="card-controls">
     <% if @previous_card_link %>

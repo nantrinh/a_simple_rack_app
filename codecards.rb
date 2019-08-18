@@ -143,7 +143,6 @@ get '/sets/:username/:url_title/flashcards/:relative_id' do
   redirect not_found if card.empty?
   @term, @definition = card 
 
-  @content = card[0]
   erb :nav_sidebar do
     erb :flashcards
   end
