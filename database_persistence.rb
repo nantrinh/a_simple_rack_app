@@ -72,6 +72,25 @@ class DatabasePersistence
     result.values
   end
 
+  def set_titles_matching(query)
+    escaped_query = PG::Connection.escape_string(query)
+    sql = <<~SQL
+      SELECT     sets.display_title, 
+                 sets.url_title, 
+                 users.name, 
+                 Count(cards.id) AS num_terms 
+      FROM       sets 
+      INNER JOIN users 
+      ON         sets.user_id = users.id 
+      INNER JOIN cards 
+      ON         sets.id = cards.set_id 
+      WHERE      display_title ilike '%#{escaped_query}%'
+      GROUP BY   sets.display_title, sets.url_title, users.name;
+    SQL
+    result = @connection.exec(sql)
+    result.values unless result.nil?
+  end
+
   # UPDATE
 
   # DELETE

@@ -16,12 +16,6 @@ configure(:development) do
 end
 
 helpers do
-#   def num_terms(set_name)
-#     set_id = @set_titles.index(set_name)
-#     cards = Cards.from_file("data/#{set_id}.txt")
-#     cards.size 
-#   end
-
   def highlight_matches(string, query)
     matches = string.scan(/#{query}/i).uniq
     matches.each do |match|
@@ -30,8 +24,8 @@ helpers do
     string
   end
 
-  def match_or_matches(number)
-    match_or_matches = number == 1 ? "match" : "matches"
+  def plural?(string, count)
+    count.to_i == 1 ? string : string + 's'
   end
 
   def stylesheet_file_names
@@ -76,14 +70,14 @@ get '/' do
   end
 end
 
-# get '/search' do
-#   @query = params[:query]
-#   @matching_names = set_titles_matching(@query)
-#   @matching_cards = cards_matching(@query)
-#   erb :nav_sidebar do
-#     erb :search_result
-#   end
-# end
+get '/search' do
+  @query = params[:query]
+  @matching_titles = @storage.set_titles_matching(@query) || []
+#  @matching_cards = cards_matching(@query)
+  erb :nav_sidebar do
+    erb :search_result
+  end
+end
 # 
 # get '/sets/new' do
 #   @title = 'Create a new set'

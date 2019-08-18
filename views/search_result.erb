@@ -1,28 +1,8 @@
 <article class="main">
   <section>
-    <h1><%= @matching_names.size %> set names matching "<%= @query %>"</h1> 
-    <% @matching_names.each do |name| %>
-      <a href="/0/<%= @set_names.index(name) %>"><%= "#{highlight_matches(name, @query)} (#{num_terms(name)} terms)" %></a>
+    <h1><%= "#{@matching_titles.size} set #{plural?("title", @matching_titles.size)} matching \"#{@query}\"" %></h1> 
+    <% @matching_titles.each do |display_title, url_title, username, num_terms| %>
+      <p><a href=<%= "/sets/#{username}/#{url_title}" %>><%== "#{highlight_matches(display_title, @query)} (#{num_terms} #{plural?("term", num_terms)})" %></a></p>
     <% end %>
-  </section>
-  <section>
-    <h1><%= @matching_cards.values.flatten.size / 2 %> cards matching "<%= @query %>"</h1> 
-    <section class="search-results">
-    <% @matching_cards.each do |name, cards| %>
-      <a href="/0/<%= @set_names.index(name) %>"><%= name %></a>:
-      <table>
-        <colgroup>
-          <col class="term">
-          <col class="definition">
-        </colgroup>
-        <% cards.each do |term, definition| %>
-          <tr>
-            <td><%== highlight_matches(term, @query) %></td>
-            <td><%== highlight_matches(definition, @query) %></td>
-          </tr>
-        <% end %>
-      </table>
-    <% end %>
-    </section>
   </section>
 </article>
