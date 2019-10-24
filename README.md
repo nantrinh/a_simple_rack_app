@@ -1,3 +1,5 @@
+**WARNING**: This project is unfinished.
+
 # A Simple Rack App: CodeCards
 
 I followed [this 4-part tutorial](https://launchschool.com/blog/growing-your-own-web-framework-with-rack-part-1) from Launch School to learn how to make a simple app. I called it CodeCards. Then I tweaked it to explore a few features that I was not that familiar with.
