@@ -1,4 +1,4 @@
-# A Simple Rack App: CodeCards
+# CodeCards
 
 **WARNING: This project is unfinished.**
 
